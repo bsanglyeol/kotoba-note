@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="theme-color" content="#f4efe5">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -571,6 +572,11 @@
   <script>
     'use strict';
 
+    // 휴대폰의 오래된 브라우저에서 structuredClone이 없어도 학습 기록이 실행되도록 합니다.
+    const deepCopy = value => typeof structuredClone === 'function'
+      ? structuredClone(value)
+      : JSON.parse(JSON.stringify(value));
+
     const LESSONS = [
       {
         day: 1,
@@ -978,9 +984,9 @@
     function loadState() {
       try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!saved || typeof saved !== 'object') return structuredClone(DEFAULT_STATE);
+        if (!saved || typeof saved !== 'object') return deepCopy(DEFAULT_STATE);
         return {
-          ...structuredClone(DEFAULT_STATE),
+          ...deepCopy(DEFAULT_STATE),
           ...saved,
           progress: saved.progress || {},
           wordProgress: saved.wordProgress || {},
@@ -989,7 +995,7 @@
           activity: Array.isArray(saved.activity) ? saved.activity : [],
           settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) }
         };
-      } catch (_) { return structuredClone(DEFAULT_STATE); }
+      } catch (_) { return deepCopy(DEFAULT_STATE); }
     }
 
     function saveState() {
@@ -1114,7 +1120,7 @@
       else if (route.view === 'settings') renderSettings();
       else renderHome();
       requestAnimationFrame(() => $main.focus({ preventScroll: true }));
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
     }
 
     function linePreview(step, index) {
@@ -1767,7 +1773,7 @@
       file.text().then(text => {
         const parsed = JSON.parse(text);
         if (!parsed || parsed.version !== 1 || !parsed.progress || !parsed.settings) throw new Error('invalid');
-        state = { ...structuredClone(DEFAULT_STATE), ...parsed, settings: { ...DEFAULT_STATE.settings, ...parsed.settings } };
+        state = { ...deepCopy(DEFAULT_STATE), ...parsed, settings: { ...DEFAULT_STATE.settings, ...parsed.settings } };
         saveState();
         toast('학습 기록을 복원했습니다.');
         render();
@@ -1776,7 +1782,7 @@
 
     function resetData() {
       if (!confirm('완료 진도와 오답 기록을 모두 지울까요? 이 작업은 되돌릴 수 없습니다.')) return;
-      state = structuredClone(DEFAULT_STATE);
+      state = deepCopy(DEFAULT_STATE);
       localStorage.removeItem(STORAGE_KEY);
       saveState();
       toast('학습 기록을 초기화했습니다.');
