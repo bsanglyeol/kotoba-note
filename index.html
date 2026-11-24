@@ -273,6 +273,7 @@
     .empty-ink { padding: 24px 10px; color: var(--muted); text-align: center; }
 
     .timeline { position: relative; display: grid; gap: 0; margin-top: 22px; }
+    .week-label { position: relative; z-index: 1; margin: 18px 0 6px; padding: 7px 12px; border-radius: 999px; color: var(--indigo); background: var(--indigo-soft); font-size: .76rem; font-weight: 800; justify-self: start; }
     .timeline::before { content: ""; position: absolute; top: 24px; bottom: 24px; left: 20px; width: 1px; background: var(--line); }
     .day-row {
       position: relative;
@@ -717,11 +718,248 @@
       }
     ];
 
+    LESSONS.push(
+      {
+        day: 8, title: '시간과 날짜', short: '날짜와 시간, 마감을 말하기', scene: '오늘 일정과 회의 시간을 확인합니다.',
+        words: [
+          { target: '今日', kana: 'きょう', korean: '쿄-', meaning: '오늘' }, { target: '午前', kana: 'ごぜん', korean: '고젠', meaning: '오전' }, { target: '始まる', kana: 'はじまる', korean: '하지마루', meaning: '시작되다' }, { target: '締め切り', kana: 'しめきり', korean: '시메키리', meaning: '마감' }, { target: '金曜日', kana: 'きんようび', korean: '킨요-비', meaning: '금요일' }
+        ],
+        steps: [
+          { prompt: '“오늘은 11월 24일입니다.”라고 말해 보세요.', target: '今日は十一月二十四日です。', kana: 'きょうはじゅういちがつにじゅうよっかです。', korean: '쿄-와 주-이치가츠 니주-욕카데스.', meaning: '오늘은 11월 24일입니다.', accepted: [] },
+          { prompt: '“회의는 오전 10시에 시작합니다.”라고 말해 보세요.', target: '会議は午前十時に始まります。', kana: 'かいぎはごぜんじゅうじにはじまります。', korean: '카이기와 고젠 주-지니 하지마리마스.', meaning: '회의는 오전 10시에 시작합니다.', accepted: [] },
+          { prompt: '“마감은 금요일입니다.”라고 알려 보세요.', target: '締め切りは金曜日です。', kana: 'しめきりはきんようびです。', korean: '시메키리와 킨요-비데스.', meaning: '마감은 금요일입니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 9, title: '이동과 길 묻기', short: '역과 교통편을 묻고 답하기', scene: '동료에게 회사까지 오는 방법을 묻습니다.',
+        words: [
+          { target: '駅', kana: 'えき', korean: '에키', meaning: '역' }, { target: '地下鉄', kana: 'ちかてつ', korean: '치카테츠', meaning: '지하철' }, { target: '行く', kana: 'いく', korean: '이쿠', meaning: '가다' }, { target: 'ここ', kana: 'ここ', korean: '코코', meaning: '여기' }, { target: '十分', kana: 'じゅっぷん', korean: '죽푸운', meaning: '10분' }
+        ],
+        steps: [
+          { prompt: '“역까지 어떻게 가나요?”라고 물어보세요.', target: '駅までどうやって行きますか。', kana: 'えきまでどうやっていきますか。', korean: '에키마데 도-약테 이키마스카.', meaning: '역까지 어떻게 가나요?', accepted: [] },
+          { prompt: '“지하철로 갑니다.”라고 답해 보세요.', target: '地下鉄で行きます。', kana: 'ちかてつでいきます。', korean: '치카테츠데 이키마스.', meaning: '지하철로 갑니다.', accepted: [] },
+          { prompt: '“여기서 10분 정도입니다.”라고 말해 보세요.', target: 'ここから十分ぐらいです。', kana: 'ここからじゅっぷんぐらいです。', korean: '코코카라 죽푸운구라이데스.', meaning: '여기서 10분 정도입니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 10, title: '물건 사기', short: '가격을 묻고 결제 방법을 확인하기', scene: '가게에서 필요한 물건을 찾고 결제합니다.',
+        words: [
+          { target: '値段', kana: 'ねだん', korean: '네단', meaning: '가격' }, { target: '安い', kana: 'やすい', korean: '야스이', meaning: '싸다' }, { target: '高い', kana: 'たかい', korean: '타카이', meaning: '비싸다' }, { target: '払う', kana: 'はらう', korean: '하라우', meaning: '지불하다' }, { target: 'カード', kana: 'カード', korean: '카-도', meaning: '카드' }
+        ],
+        steps: [
+          { prompt: '“이것은 얼마인가요?”라고 물어보세요.', target: 'これはいくらですか。', kana: 'これはいくらですか。', korean: '코레와 이쿠라데스카.', meaning: '이것은 얼마인가요?', accepted: [] },
+          { prompt: '“조금 더 싼 것이 있나요?”라고 물어보세요.', target: 'もう少し安いものはありますか。', kana: 'もうすこしやすいものはありますか。', korean: '모-스코시 야스이 모노와 아리마스카.', meaning: '조금 더 싼 것이 있나요?', accepted: [] },
+          { prompt: '“카드로 결제할 수 있나요?”라고 물어보세요.', target: 'カードで払えますか。', kana: 'カードではらえますか。', korean: '카-도데 하라에마스카.', meaning: '카드로 결제할 수 있나요?', accepted: [] }
+        ]
+      },
+      {
+        day: 11, title: '식당에서 주문하기', short: '추천 메뉴를 묻고 계산하기', scene: '점심시간에 식당에서 자연스럽게 주문합니다.',
+        words: [
+          { target: '注文', kana: 'ちゅうもん', korean: '추-몬', meaning: '주문' }, { target: 'おすすめ', kana: 'おすすめ', korean: '오스스메', meaning: '추천' }, { target: '一つ', kana: 'ひとつ', korean: '히토츠', meaning: '하나' }, { target: '会計', kana: 'かいけい', korean: '카이케-', meaning: '계산' }, { target: '美味しい', kana: 'おいしい', korean: '오이시-', meaning: '맛있다' }
+        ],
+        steps: [
+          { prompt: '“추천 메뉴는 무엇인가요?”라고 물어보세요.', target: 'おすすめは何ですか。', kana: 'おすすめはなんですか。', korean: '오스스메와 난데스카.', meaning: '추천 메뉴는 무엇인가요?', accepted: [] },
+          { prompt: '“이것 하나 부탁합니다.”라고 주문해 보세요.', target: 'これを一つお願いします。', kana: 'これをひとつおねがいします。', korean: '코레오 히토츠 오네가이시마스.', meaning: '이것 하나 부탁합니다.', accepted: [] },
+          { prompt: '“계산 부탁합니다.”라고 말해 보세요.', target: 'お会計をお願いします。', kana: 'おかいけいをおねがいします。', korean: '오카이케-오 오네가이시마스.', meaning: '계산 부탁합니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 12, title: '날씨 이야기', short: '날씨를 말하고 준비물을 챙기기', scene: '출근길에 동료와 날씨 이야기를 나눕니다.',
+        words: [
+          { target: '天気', kana: 'てんき', korean: '텐키', meaning: '날씨' }, { target: '寒い', kana: 'さむい', korean: '사무이', meaning: '추울다' }, { target: '暑い', kana: 'あつい', korean: '아츠이', meaning: '덥다' }, { target: '雨', kana: 'あめ', korean: '아메', meaning: '비' }, { target: '傘', kana: 'かさ', korean: '카사', meaning: '우산' }
+        ],
+        steps: [
+          { prompt: '“오늘은 조금 추네요.”라고 말해 보세요.', target: '今日は少し寒いですね。', kana: 'きょうはすこしさむいですね。', korean: '쿄-와 스코시 사무이데스네.', meaning: '오늘은 조금 추네요.', accepted: [] },
+          { prompt: '“내일은 비가 온다고 합니다.”라고 전해 보세요.', target: '明日は雨が降るそうです。', kana: 'あしたはあめがふるそうです。', korean: '아시타와 아메가 후루 소-데스.', meaning: '내일은 비가 온다고 합니다.', accepted: [] },
+          { prompt: '“우산을 가져가겠습니다.”라고 말해 보세요.', target: '傘を持って行きます。', kana: 'かさをもっていきます。', korean: '카사오 못테 이키마스.', meaning: '우산을 가져가겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 13, title: '건강과 컨디션', short: '몸 상태를 알리고 양해를 구하기', scene: '몸이 좋지 않아 동료에게 상태를 설명합니다.',
+        words: [
+          { target: '頭', kana: 'あたま', korean: '아타마', meaning: '머리' }, { target: '痛い', kana: 'いたい', korean: '이타이', meaning: '아프다' }, { target: '薬', kana: 'くすり', korean: '쿠스리', meaning: '약' }, { target: '飲む', kana: 'のむ', korean: '노무', meaning: '마시다, 복용하다' }, { target: '休む', kana: 'やすむ', korean: '야스무', meaning: '쉬다' }
+        ],
+        steps: [
+          { prompt: '“머리가 조금 아프니다.”라고 말해 보세요.', target: '少し頭が痛いです。', kana: 'すこしあたまがいたいです。', korean: '스코시 아타마가 이타이데스.', meaning: '머리가 조금 아프니다.', accepted: [] },
+          { prompt: '“오늘은 일찍 퇴근해도 될까요?”라고 물어보세요.', target: '今日は早く帰ってもいいですか。', kana: 'きょうははやくかえってもいいですか。', korean: '쿄-와 하야쿠 카엣테모 이-데스카.', meaning: '오늘은 일찍 퇴근해도 될까요?', accepted: [] },
+          { prompt: '“약을 먹고 쉬겠습니다.”라고 말해 보세요.', target: '薬を飲んで休みます。', kana: 'くすりをのんでやすみます。', korean: '쿠스리오 논데 야스미마스.', meaning: '약을 먹고 쉬겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 14, title: '2주차 생활 회화 복습', short: '시간·이동·건강 표현을 연결하기', scene: '2주차에 배운 표현을 실제 하루처럼 이어 말합니다.',
+        words: [
+          { target: '今週', kana: 'こんしゅう', korean: '콘슈-', meaning: '이번 주' }, { target: '毎日', kana: 'まいにち', korean: '마이니치', meaning: '매일' }, { target: '電車', kana: 'でんしゃ', korean: '덴샤', meaning: '전철, 열차' }, { target: '体調', kana: 'たいちょう', korean: '타이초-', meaning: '몸 상태' }, { target: '早く', kana: 'はやく', korean: '하야쿠', meaning: '일찍, 빨리' }
+        ],
+        steps: [
+          { prompt: '이번 주에 매일 전철로 회사에 갔다고 말해 보세요.', target: '今週は毎日電車で会社に行きました。', kana: 'こんしゅうはまいにちでんしゃでかいしゃにいきました。', korean: '콘슈-와 마이니치 덴샤데 카이샤니 이키마시타.', meaning: '이번 주에는 매일 전철로 회사에 갔습니다.', accepted: [] },
+          { prompt: '금요일 회의가 오전 10시부터라고 말해 보세요.', target: '金曜日の会議は午前十時からです。', kana: 'きんようびのかいぎはごぜんじゅうじからです。', korean: '킨요-비노 카이기와 고젠 주-지카라데스.', meaning: '금요일 회의는 오전 10시부터입니다.', accepted: [] },
+          { prompt: '몸 상태가 좋지 않아 오늘은 일찍 간다고 말해 보세요.', target: '体調が悪いので、今日は早く帰ります。', kana: 'たいちょうがわるいので、きょうははやくかえります。', korean: '타이초-가 와루이노데, 쿄-와 하야쿠 카에리마스.', meaning: '몸 상태가 좋지 않아서 오늘은 일찍 가겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 15, title: '이메일 주고받기', short: '확인·첨부·회신 표현 익히기', scene: '동료에게 자료를 첨부한 이메일을 보냅니다.',
+        words: [
+          { target: 'メール', kana: 'メール', korean: '메-루', meaning: '이메일' }, { target: '添付', kana: 'てんぷ', korean: '텐푸', meaning: '첨부' }, { target: '返信', kana: 'へんしん', korean: '헨신', meaning: '회신' }, { target: '確認', kana: 'かくにん', korean: '카쿠닌', meaning: '확인' }, { target: '待つ', kana: 'まつ', korean: '마츠', meaning: '기다리다' }
+        ],
+        steps: [
+          { prompt: '“이메일을 확인해 주세요.”라고 부탁해 보세요.', target: 'メールを確認してください。', kana: 'メールをかくにんしてください。', korean: '메-루오 카쿠닌시테 쿠다사이.', meaning: '이메일을 확인해 주세요.', accepted: [] },
+          { prompt: '“자료를 첨부했습니다.”라고 알려 보세요.', target: '資料を添付しました。', kana: 'しりょうをてんぷしました。', korean: '시료-오 텐푸시마시타.', meaning: '자료를 첨부했습니다.', accepted: [] },
+          { prompt: '“회신을 기다리겠습니다.”라고 마무리해 보세요.', target: 'ご返信をお待ちしています。', kana: 'ごへんしんをおまちしています。', korean: '고헨신오 오마치시테이마스.', meaning: '회신을 기다리고 있습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 16, title: '전화 응대', short: '담당자를 찾고 메모를 남기기', scene: '회사로 온 전화를 정중하게 응대합니다.',
+        words: [
+          { target: '電話', kana: 'でんわ', korean: '덴와', meaning: '전화' }, { target: '席', kana: 'せき', korean: '세키', meaning: '자리' }, { target: '外す', kana: 'はずす', korean: '하즈스', meaning: '비우다, 벗기다' }, { target: '後ほど', kana: 'のちほど', korean: '노치호도', meaning: '나중에' }, { target: '折り返す', kana: 'おりかえす', korean: '오리카에스', meaning: '다시 전화하다' }
+        ],
+        steps: [
+          { prompt: '“다나카 씨 계신가요?”라고 물어보세요.', target: '田中さんはいらっしゃいますか。', kana: 'たなかさんはいらっしゃいますか。', korean: '타나카산와 이라샤이마스카.', meaning: '다나카 씨 계신가요?', accepted: [] },
+          { prompt: '“지금 자리를 비웠습니다.”라고 알려 보세요.', target: 'ただ今席を外しています。', kana: 'ただいませきをはずしています。', korean: '타다이마 세키오 하즈시테이마스.', meaning: '지금 자리를 비웠습니다.', accepted: [] },
+          { prompt: '“나중에 다시 전화드리겠습니다.”라고 말해 보세요.', target: '後ほど折り返しお電話します。', kana: 'のちほどおりかえしおでんわします。', korean: '노치호도 오리카에시 오덴와시마스.', meaning: '나중에 다시 전화드리겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 17, title: '업무 진행 보고', short: '진행 상황과 완료 시점을 알리기', scene: '팀장에게 오늘의 업무 진행 상황을 보고합니다.',
+        words: [
+          { target: '作業', kana: 'さぎょう', korean: '사기요-', meaning: '작업' }, { target: '予定', kana: 'よてい', korean: '요테-', meaning: '예정' }, { target: '進む', kana: 'すすむ', korean: '스스무', meaning: '진행되다' }, { target: '半分', kana: 'はんぶん', korean: '한분', meaning: '절반' }, { target: '報告', kana: 'ほうこく', korean: '호-코쿠', meaning: '보고' }
+        ],
+        steps: [
+          { prompt: '“작업은 예정대로 진행되고 있습니다.”라고 보고해 보세요.', target: '作業は予定どおり進んでいます。', kana: 'さぎょうはよていどおりすすんでいます。', korean: '사기요-와 요테-도오리 스슨데이마스.', meaning: '작업은 예정대로 진행되고 있습니다.', accepted: [] },
+          { prompt: '“절반 정도 끝났습니다.”라고 말해 보세요.', target: '半分ほど終わりました。', kana: 'はんぶんほどおわりました。', korean: '한분호도 오와리마시타.', meaning: '절반 정도 끝났습니다.', accepted: [] },
+          { prompt: '“내일까지 보고하겠습니다.”라고 말해 보세요.', target: '明日までに報告します。', kana: 'あしたまでにほうこくします。', korean: '아시타마데니 호-코쿠시마스.', meaning: '내일까지 보고하겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 18, title: '정중한 요청과 허락', short: '일을 부탁하고 허락을 구하기', scene: '동료에게 자료 확인을 부탁합니다.',
+        words: [
+          { target: '資料', kana: 'しりょう', korean: '시료-', meaning: '자료' }, { target: '名前', kana: 'なまえ', korean: '나마에', meaning: '이름' }, { target: '書く', kana: 'かく', korean: '카쿠', meaning: '쓰다' }, { target: '先に', kana: 'さきに', korean: '사키니', meaning: '먼저' }, { target: 'よろしい', kana: 'よろしい', korean: '요로시-', meaning: '괜찮다(정중함)' }
+        ],
+        steps: [
+          { prompt: '“이 자료를 봐주실 수 있나요?”라고 부탁해 보세요.', target: 'この資料を見てもらえますか。', kana: 'このしりょうをみてもらえますか。', korean: '코노 시료-오 미테모라에마스카.', meaning: '이 자료를 봐주실 수 있나요?', accepted: [] },
+          { prompt: '“여기에 이름을 써 주세요.”라고 부탁해 보세요.', target: 'ここに名前を書いてください。', kana: 'ここになまえをかいてください。', korean: '코코니 나마에오 카이테 쿠다사이.', meaning: '여기에 이름을 써 주세요.', accepted: [] },
+          { prompt: '“먼저 확인해도 될까요?”라고 물어보세요.', target: '先に確認してもよろしいですか。', kana: 'さきにかくにんしてもよろしいですか。', korean: '사키니 카쿠닌시테모 요로시-데스카.', meaning: '먼저 확인해도 될까요?', accepted: [] }
+        ]
+      },
+      {
+        day: 19, title: '문제와 지연 알리기', short: '문제의 원인과 대응 계획을 설명하기', scene: '업무 중 발생한 문제를 팀에 알립니다.',
+        words: [
+          { target: '問題', kana: 'もんだい', korean: '몬다이', meaning: '문제' }, { target: '遅れる', kana: 'おくれる', korean: '오쿠레루', meaning: '늦어지다' }, { target: '原因', kana: 'げんいん', korean: '겐인', meaning: '원인' }, { target: '連絡', kana: 'れんらく', korean: '렌라쿠', meaning: '연락' }, { target: 'システム', kana: 'システム', korean: '시스테무', meaning: '시스템' }
+        ],
+        steps: [
+          { prompt: '“시스템에 문제가 있습니다.”라고 알려 보세요.', target: 'システムに問題があります。', kana: 'システムにもんだいがあります。', korean: '시스테무니 몬다이가 아리마스.', meaning: '시스템에 문제가 있습니다.', accepted: [] },
+          { prompt: '“예정보다 조금 늦어지고 있습니다.”라고 보고해 보세요.', target: '予定より少し遅れています。', kana: 'よていよりすこしおくれています。', korean: '요테-요리 스코시 오쿠레테이마스.', meaning: '예정보다 조금 늦어지고 있습니다.', accepted: [] },
+          { prompt: '“원인을 확인하고 바로 연락하겠습니다.”라고 말해 보세요.', target: '原因を確認して、すぐに連絡します。', kana: 'げんいんをかくにんして、すぐにれんらくします。', korean: '겐인오 카쿠닌시테, 스구니 렌라쿠시마스.', meaning: '원인을 확인하고 바로 연락하겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 20, title: '의견과 동의', short: '나의 생각을 말하고 상대 의견에 반응하기', scene: '회의에서 제안에 대한 의견을 나눕니다.',
+        words: [
+          { target: '案', kana: 'あん', korean: '안', meaning: '안, 제안' }, { target: '思う', kana: 'おもう', korean: '오모우', meaning: '생각하다' }, { target: '意見', kana: 'いけん', korean: '이켄', meaning: '의견' }, { target: '賛成', kana: 'さんせい', korean: '산세-', meaning: '찬성' }, { target: '考える', kana: 'かんがえる', korean: '칸가에루', meaning: '생각하다, 검토하다' }
+        ],
+        steps: [
+          { prompt: '“저는 이 안이 좋다고 생각합니다.”라고 의견을 말해 보세요.', target: '私はこの案がいいと思います。', kana: 'わたしはこのあんがいいとおもいます。', korean: '와타시와 코노 안가 이-토 오모이마스.', meaning: '저는 이 안이 좋다고 생각합니다.', accepted: [] },
+          { prompt: '“그 의견에 찬성합니다.”라고 반응해 보세요.', target: 'その意見に賛成です。', kana: 'そのいけんにさんせいです。', korean: '소노 이켄니 산세-데스.', meaning: '그 의견에 찬성합니다.', accepted: [] },
+          { prompt: '“조금 더 생각해 봅시다.”라고 제안해 보세요.', target: 'もう少し考えてみましょう。', kana: 'もうすこしかんがえてみましょう。', korean: '모-스코시 칸가에테 미마쇼-.', meaning: '조금 더 생각해 봅시다.', accepted: [] }
+        ]
+      },
+      {
+        day: 21, title: '3주차 업무 회화 복습', short: '보고·문제·상의 표현을 연결하기', scene: '업무 진행 상황과 문제를 보고하고 상의합니다.',
+        words: [
+          { target: '進捗', kana: 'しんちょく', korean: '신초쿠', meaning: '진척' }, { target: '報告', kana: 'ほうこく', korean: '호-코쿠', meaning: '보고' }, { target: '問題', kana: 'もんだい', korean: '몬다이', meaning: '문제' }, { target: '原因', kana: 'げんいん', korean: '겐인', meaning: '원인' }, { target: '相談', kana: 'そうだん', korean: '소-단', meaning: '상의' }
+        ],
+        steps: [
+          { prompt: '진척을 이메일로 보고했다고 말해 보세요.', target: 'メールで進捗を報告しました。', kana: 'メールでしんちょくをほうこくしました。', korean: '메-루데 신초쿠오 호-코쿠시마시타.', meaning: '이메일로 진척을 보고했습니다.', accepted: [] },
+          { prompt: '문제의 원인을 확인 중이라고 말해 보세요.', target: '問題の原因を確認しています。', kana: 'もんだいのげんいんをかくにんしています。', korean: '몬다이노 겐인오 카쿠닌시테이마스.', meaning: '문제의 원인을 확인하고 있습니다.', accepted: [] },
+          { prompt: '내일 다시 상의하자고 제안해 보세요.', target: '明日もう一度相談しましょう。', kana: 'あしたもういちどそうだんしましょう。', korean: '아시타 모-이치도 소-단시마쇼-.', meaning: '내일 다시 한 번 상의합시다.', accepted: [] }
+        ]
+      },
+      {
+        day: 22, title: '방문객 응대', short: '손님을 맞이하고 안내하기', scene: '회사를 방문한 고객을 정중하게 안내합니다.',
+        words: [
+          { target: '本日', kana: 'ほんじつ', korean: '혼지츠', meaning: '금일, 오늘(격식)' }, { target: 'お越し', kana: 'おこし', korean: '오코시', meaning: '방문' }, { target: 'こちら', kana: 'こちら', korean: '코치라', meaning: '이쪽' }, { target: '担当者', kana: 'たんとうしゃ', korean: '탄토-샤', meaning: '담당자' }, { target: '呼ぶ', kana: 'よぶ', korean: '요부', meaning: '부르다' }
+        ],
+        steps: [
+          { prompt: '“오늘 와 주셔서 감사합니다.”라고 인사해 보세요.', target: '本日はお越しいただき、ありがとうございます。', kana: 'ほんじつはおこしいただき、ありがとうございます。', korean: '혼지츠와 오코시 이타다키, 아리가토-고자이마스.', meaning: '오늘 와 주셔서 감사합니다.', accepted: [] },
+          { prompt: '“이쪽으로 오세요.”라고 안내해 보세요.', target: 'こちらへどうぞ。', kana: 'こちらへどうぞ。', korean: '코치라에 도-조.', meaning: '이쪽으로 오세요.', accepted: [] },
+          { prompt: '“담당자를 부르겠습니다.”라고 말해 보세요.', target: '担当者をお呼びします。', kana: 'たんとうしゃをおよびします。', korean: '탄토-샤오 오요비시마스.', meaning: '담당자를 부르겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 23, title: '일정 변경', short: '회의 시간을 조정하고 확정하기', scene: '예정된 회의 시간을 다시 조율합니다.',
+        words: [
+          { target: '変更', kana: 'へんこう', korean: '헨코-', meaning: '변경' }, { target: '木曜日', kana: 'もくようび', korean: '모쿠요-비', meaning: '목요일' }, { target: '午後', kana: 'ごご', korean: '고고', meaning: '오후' }, { target: 'いかが', kana: 'いかが', korean: '이카가', meaning: '어떠신가요' }, { target: '時間', kana: 'じかん', korean: '지칸', meaning: '시간' }
+        ],
+        steps: [
+          { prompt: '“회의 시간을 변경할 수 있나요?”라고 물어보세요.', target: '会議の時間を変更できますか。', kana: 'かいぎのじかんをへんこうできますか。', korean: '카이기노 지칸오 헨코-데키마스카.', meaning: '회의 시간을 변경할 수 있나요?', accepted: [] },
+          { prompt: '“목요일 오후는 어떠세요?”라고 제안해 보세요.', target: '木曜日の午後はいかがですか。', kana: 'もくようびのごごはいかがですか。', korean: '모쿠요-비노 고고와 이카가데스카.', meaning: '목요일 오후는 어떠세요?', accepted: [] },
+          { prompt: '“그럼 3시로 변경하겠습니다.”라고 확정해 보세요.', target: 'では、三時に変更します。', kana: 'では、さんじにへんこうします。', korean: '데와, 산지니 헨코-시마스.', meaning: '그럼 3시로 변경하겠습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 24, title: '출장과 이동', short: '교통편과 숙박 계획을 설명하기', scene: '다음 주 출장 일정을 동료와 확인합니다.',
+        words: [
+          { target: '来週', kana: 'らいしゅう', korean: '라이슈-', meaning: '다음 주' }, { target: '大阪', kana: 'おおさか', korean: '오-사카', meaning: '오사카' }, { target: '出張', kana: 'しゅっちょう', korean: '숏초-', meaning: '출장' }, { target: '新幹線', kana: 'しんかんせん', korean: '신칸센', meaning: '신칸센' }, { target: '切符', kana: 'きっぷ', korean: '키푸', meaning: '표' }, { target: '予約', kana: 'よやく', korean: '요야쿠', meaning: '예약' }
+        ],
+        steps: [
+          { prompt: '“다음 주에 오사카로 출장 갑니다.”라고 말해 보세요.', target: '来週、大阪へ出張します。', kana: 'らいしゅう、おおさかへしゅっちょうします。', korean: '라이슈-, 오-사카에 숏초-시마스.', meaning: '다음 주에 오사카로 출장 갑니다.', accepted: [] },
+          { prompt: '“신칸센 표를 예약했습니다.”라고 말해 보세요.', target: '新幹線の切符を予約しました。', kana: 'しんかんせんのきっぷをよやくしました。', korean: '신칸센노 키푸오 요야쿠시마시타.', meaning: '신칸센 표를 예약했습니다.', accepted: [] },
+          { prompt: '“호텔은 역 근처입니다.”라고 말해 보세요.', target: 'ホテルは駅の近くです。', kana: 'ホテルはえきのちかくです。', korean: '호테루와 에키노 치카쿠데스.', meaning: '호텔은 역 근처입니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 25, title: '취미와 일상 대화', short: '휴일과 좋아하는 것에 대해 말하기', scene: '쉬는 시간에 동료와 가벼운 대화를 나눕니다.',
+        words: [
+          { target: '休日', kana: 'きゅうじつ', korean: '큐-지츠', meaning: '휴일' }, { target: '映画', kana: 'えいが', korean: '에-가', meaning: '영화' }, { target: '好き', kana: 'すき', korean: '스키', meaning: '좋아함' }, { target: '最近', kana: 'さいきん', korean: '사이킨', meaning: '최근' }, { target: '料理', kana: 'りょうり', korean: '료-리', meaning: '요리' }
+        ],
+        steps: [
+          { prompt: '“휴일에는 무엇을 하세요?”라고 물어보세요.', target: '休日は何をしていますか。', kana: 'きゅうじつはなにをしていますか。', korean: '큐-지츠와 나니오 시테이마스카.', meaning: '휴일에는 무엇을 하세요?', accepted: [] },
+          { prompt: '“저는 영화 보는 것을 좋아합니다.”라고 말해 보세요.', target: '私は映画を見るのが好きです。', kana: 'わたしはえいがをみるのがすきです。', korean: '와타시와 에-가오 미루노가 스키데스.', meaning: '저는 영화 보는 것을 좋아합니다.', accepted: [] },
+          { prompt: '“최근에는 일본 요리를 만들고 있습니다.”라고 말해 보세요.', target: '最近、日本の料理を作っています。', kana: 'さいきん、にほんのりょうりをつくっています。', korean: '사이킨, 니혼노 료-리오 츠쿳테이마스.', meaning: '최근에는 일본 요리를 만들고 있습니다.', accepted: [] }
+        ]
+      },
+      {
+        day: 26, title: '안전과 긴급 안내', short: '위험을 알리고 도움을 요청하기', scene: '사무실에서 안전 주의 사항을 전합니다.',
+        words: [
+          { target: '危ない', kana: 'あぶない', korean: '아부나이', meaning: '위험하다' }, { target: '触る', kana: 'さわる', korean: '사와루', meaning: '만지다' }, { target: '非常口', kana: 'ひじょうぐち', korean: '히죠-구치', meaning: '비상구' }, { target: '知らせる', kana: 'しらせる', korean: '시라세루', meaning: '알리다' }, { target: '何か', kana: 'なにか', korean: '나니카', meaning: '무언가' }
+        ],
+        steps: [
+          { prompt: '“위험하니 만지지 마세요.”라고 주의를 줘 보세요.', target: '危ないので触らないでください。', kana: 'あぶないのでさわらないでください。', korean: '아부나이노데 사와라나이데 쿠다사이.', meaning: '위험하니 만지지 마세요.', accepted: [] },
+          { prompt: '“비상구는 이쪽입니다.”라고 안내해 보세요.', target: '非常口はこちらです。', kana: 'ひじょうぐちはこちらです。', korean: '히죠-구치와 코치라데스.', meaning: '비상구는 이쪽입니다.', accepted: [] },
+          { prompt: '“무슨 일이 있으면 바로 알려 주세요.”라고 말해 보세요.', target: '何かあったら、すぐに知らせてください。', kana: 'なにかあったら、すぐにしらせてください。', korean: '나니카 앗타라, 스구니 시라세테 쿠다사이.', meaning: '무슨 일이 있으면 바로 알려 주세요.', accepted: [] }
+        ]
+      },
+      {
+        day: 27, title: '발표와 설명', short: '결과를 설명하고 질문을 받기', scene: '회의에서 짧게 결과를 발표합니다.',
+        words: [
+          { target: '結果', kana: 'けっか', korean: '켓카', meaning: '결과' }, { target: '説明', kana: 'せつめい', korean: '세츠메-', meaning: '설명' }, { target: '表', kana: 'ひょう', korean: '효-', meaning: '표' }, { target: 'ご覧', kana: 'ごらん', korean: '고란', meaning: '보시기(격식)' }, { target: '質問', kana: 'しつもん', korean: '시츠몬', meaning: '질문' }
+        ],
+        steps: [
+          { prompt: '“지금부터 결과를 설명드리겠습니다.”라고 발표를 시작해 보세요.', target: 'これから結果をご説明します。', kana: 'これからけっかをごせつめいします。', korean: '코레카라 켓카오 고세츠메-시마스.', meaning: '지금부터 결과를 설명드리겠습니다.', accepted: [] },
+          { prompt: '“이 표를 봐 주세요.”라고 안내해 보세요.', target: 'この表をご覧ください。', kana: 'このひょうをごらんください。', korean: '코노 효-오 고란 쿠다사이.', meaning: '이 표를 봐 주세요.', accepted: [] },
+          { prompt: '“질문 있으신가요?”라고 물어보세요.', target: 'ご質問はありますか。', kana: 'ごしつもんはありますか。', korean: '고시츠몬와 아리마스카.', meaning: '질문 있으신가요?', accepted: [] }
+        ]
+      },
+      {
+        day: 28, title: '4주 실전 회화 완성', short: '자기소개부터 업무 조율까지 연결하기', scene: '4주 동안 배운 표현을 실제 업무 대화처럼 이어 말합니다.',
+        words: [
+          { target: '日程', kana: 'にってい', korean: '닛테-', meaning: '일정' }, { target: '変更', kana: 'へんこう', korean: '헨코-', meaning: '변경' }, { target: '問題', kana: 'もんだい', korean: '몬다이', meaning: '문제' }, { target: '連絡', kana: 'れんらく', korean: '렌라쿠', meaning: '연락' }, { target: 'お願い', kana: 'おねがい', korean: '오네가이', meaning: '부탁' }
+        ],
+        steps: [
+          { prompt: '처음 만난 상대에게 한국 회사의 인사 담당이라고 소개해 보세요.', target: '初めまして。韓国の会社で人事の仕事をしています。', kana: 'はじめまして。かんこくのかいしゃでじんじのしごとをしています。', korean: '하지메마시테. 칸코쿠노 카이샤데 진지노 시고토오 시테이마스.', meaning: '처음 뵙겠습니다. 한국 회사에서 인사 업무를 하고 있습니다.', accepted: [] },
+          { prompt: '회의 일정을 변경하고 싶다며 목요일을 제안해 보세요.', target: '会議の日程を変更したいのですが、木曜日はいかがですか。', kana: 'かいぎのにっていをへんこうしたいのですが、もくようびはいかがですか。', korean: '카이기노 닛테-오 헨코-시타이노데스가, 모쿠요-비와 이카가데스카.', meaning: '회의 일정을 변경하고 싶은데, 목요일은 어떠신가요?', accepted: [] },
+          { prompt: '문제가 있으면 바로 연락해 달라고 부탁해 보세요.', target: '問題があれば、すぐにご連絡ください。', kana: 'もんだいがあれば、すぐにごれんらくください。', korean: '몬다이가 아레바, 스구니 고렌라쿠 쿠다사이.', meaning: '문제가 있으면 바로 연락해 주세요.', accepted: [] }
+        ]
+      }
+    );
+
+    const COURSE_DAYS = LESSONS.length;
+
     const STORAGE_KEY = 'kotoba_note_v1';
     const DEFAULT_STATE = {
       version: 1,
       progress: {},
       wordProgress: {},
+      wordSchedule: {},
       mistakes: {},
       activity: [],
       settings: { showKana: true, showKorean: true, autoSpeak: false, speechRate: .82 }
@@ -746,6 +984,7 @@
           ...saved,
           progress: saved.progress || {},
           wordProgress: saved.wordProgress || {},
+          wordSchedule: saved.wordSchedule || {},
           mistakes: saved.mistakes || {},
           activity: Array.isArray(saved.activity) ? saved.activity : [],
           settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) }
@@ -823,6 +1062,7 @@
     function currentSection() {
       const route = getRoute();
       if (route.view === 'lesson') return 'home';
+      if (route.view === 'maintenance') return 'words';
       return route.view;
     }
 
@@ -841,7 +1081,8 @@
 
     function updateHeader() {
       const done = completedCount();
-      document.getElementById('headerLevel').textContent = done >= 7 ? '1주차 완주' : `회화 입문 · ${done}/7`;
+      const week = Math.min(4, Math.floor(done / 7) + 1);
+      document.getElementById('headerLevel').textContent = done >= COURSE_DAYS ? '4주 핵심 완주' : `${week}주차 · ${done}/${COURSE_DAYS}`;
       document.getElementById('headerStreak').textContent = `연속 ${streak()}일`;
     }
 
@@ -850,7 +1091,7 @@
       const [view, p1, p2] = raw.split('/');
       if (view === 'lesson') return { view, day: Number(p1) || 1, step: Number(p2) || 0 };
       if (view === 'words') return { view, day: Number(p1) || currentDay() };
-      return { view: ['home','plan','review','settings'].includes(view) ? view : 'home' };
+      return { view: ['home','plan','maintenance','review','settings'].includes(view) ? view : 'home' };
     }
 
     function navigate(path, replace = false) {
@@ -868,6 +1109,7 @@
       if (route.view === 'lesson') renderLesson(route.day, route.step);
       else if (route.view === 'plan') renderPlan();
       else if (route.view === 'words') renderWords(route.day);
+      else if (route.view === 'maintenance') renderMaintenance();
       else if (route.view === 'review') renderReview();
       else if (route.view === 'settings') renderSettings();
       else renderHome();
@@ -888,19 +1130,19 @@
       const progress = state.progress[day] || { step: 0 };
       const done = completedCount();
       const mistakes = activeMistakes();
-      const finished = done === LESSONS.length;
+      const finished = done === COURSE_DAYS;
       $main.innerHTML = `<div class="view">
         <section class="hero-panel" aria-labelledby="home-title">
           <div class="hero-copy">
-            <p class="eyebrow">${finished ? '7-day course complete' : `Day ${day} · 오늘의 회화`}</p>
-            <h1 class="page-title" id="home-title">${finished ? '한 주의 문장이<br>내 말이 되었습니다.' : esc(lesson.title)}</h1>
-            <p class="lead">${finished ? '오답 노트로 약한 문장을 다시 다지거나, 1일차부터 자유롭게 복습해 보세요.' : esc(lesson.scene)}</p>
+            <p class="eyebrow">${finished ? '4-week core complete · review continues' : `Week ${Math.ceil(day / 7)} · Day ${day}`}</p>
+            <h1 class="page-title" id="home-title">${finished ? '4주 핵심 과정 완주.<br>이제는 잊지 않게.' : esc(lesson.title)}</h1>
+            <p class="lead">${finished ? '과정은 끝나지만 학습은 계속됩니다. 맞힌 단어는 1일·1주·1개월 간격으로, 틀린 문장은 오답 노트에서 다시 나옵니다.' : esc(lesson.scene)}</p>
             <div class="progress-block">
-              <div class="progress-label"><span>7일 회화 코스</span><span>${done} / 7일</span></div>
-              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="${done}"><div class="progress-fill" style="width:${done / 7 * 100}%"></div></div>
+              <div class="progress-label"><span>4주 핵심 코스</span><span>${done} / ${COURSE_DAYS}일</span></div>
+              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="${COURSE_DAYS}" aria-valuenow="${done}"><div class="progress-fill" style="width:${done / COURSE_DAYS * 100}%"></div></div>
             </div>
             <div class="hero-actions">
-              <button class="btn red" id="startToday">${finished ? '1일차 다시 연습' : progress.step ? `Day ${day} 이어서` : `Day ${day} 시작하기`} <span aria-hidden="true">→</span></button>
+              <button class="btn red" id="startToday">${finished ? '오늘의 맞춤 복습' : progress.step ? `Day ${day} 이어서` : `Day ${day} 시작하기`} <span aria-hidden="true">→</span></button>
               ${mistakes.length ? '<button class="btn ghost" id="quickReview">오늘의 오답 복습</button>' : ''}
             </div>
           </div>
@@ -938,6 +1180,7 @@
       </div>`;
 
       document.getElementById('startToday').addEventListener('click', () => {
+        if (finished) { navigate('maintenance'); return; }
         const startDay = finished ? 1 : day;
         const startStep = finished ? 0 : Math.min(state.progress[startDay]?.step || 0, LESSONS[startDay - 1].steps.length - 1);
         reviewContext = null;
@@ -952,15 +1195,16 @@
     function renderPlan() {
       const now = currentDay();
       $main.innerHTML = `<div class="view plan-wrap">
-        <p class="eyebrow">7-day conversation path</p>
+        <p class="eyebrow">4-week conversation path · ${COURSE_DAYS} days</p>
         <h1 class="page-title">매일 한 장면씩,<br>말할 수 있는 일본어.</h1>
-        <p class="lead">1일차 자기소개에서 시작해 일주일 뒤에는 업무 대화를 연결해서 말합니다. 완료한 날은 언제든 다시 연습할 수 있습니다.</p>
-        <div class="timeline" aria-label="7일 학습 진도">
+        <p class="lead">1주차 자기소개에서 시작해 4주차 발표·일정 조율까지 단계적으로 연결합니다. 7·14·21·28일차는 주차 복습이며, 완료한 날은 언제든 다시 연습할 수 있습니다.</p>
+        <div class="timeline" aria-label="${COURSE_DAYS}일 학습 진도">
           ${LESSONS.map(lesson => {
             const done = Boolean(state.progress[lesson.day]?.completed);
             const unlocked = isUnlocked(lesson.day);
             const current = lesson.day === now && !done;
-            return `<article class="day-row ${done ? 'done' : ''} ${current ? 'current' : ''} ${!unlocked ? 'locked' : ''}">
+            const weekLabel = (lesson.day - 1) % 7 === 0 ? `<div class="week-label">${Math.ceil(lesson.day / 7)}주차 · Day ${lesson.day}–${Math.min(lesson.day + 6, COURSE_DAYS)}</div>` : '';
+            return `${weekLabel}<article class="day-row ${done ? 'done' : ''} ${current ? 'current' : ''} ${!unlocked ? 'locked' : ''}">
               <div class="day-dot" aria-hidden="true">${done ? '✓' : lesson.day}</div>
               <div class="day-copy"><strong>Day ${lesson.day} · ${esc(lesson.title)}</strong><span>${esc(lesson.short)}</span></div>
               <button class="btn ${current ? 'red' : 'ghost'} small day-action" data-day="${lesson.day}" ${!unlocked ? 'disabled' : ''}>${done ? '복습' : current ? '시작' : '잠김'}</button>
@@ -980,6 +1224,38 @@
       const saved = state.wordProgress[day] || {};
       const correct = Array.isArray(saved.correct) ? saved.correct.filter(Number.isInteger) : [];
       return { correct: [...new Set(correct)], lastIndex: Number.isInteger(saved.lastIndex) ? saved.lastIndex : 0 };
+    }
+
+    function wordReviewKey(day, index) { return `${day}-${index}`; }
+
+    function scheduleWordReview(day, index, correct) {
+      const key = wordReviewKey(day, index);
+      const previous = state.wordSchedule[key] || { stage: 0 };
+      const stage = correct ? Math.min((previous.stage || 0) + 1, 4) : 0;
+      const intervalDays = correct ? [0, 1, 7, 30, 60][stage] : 0;
+      state.wordSchedule[key] = {
+        day, index, stage, lastAt: Date.now(),
+        nextDue: Date.now() + intervalDays * 86400000,
+        mistakes: (previous.mistakes || 0) + (correct ? 0 : 1)
+      };
+    }
+
+    function allWordItems() {
+      return LESSONS.flatMap(lesson => lesson.words.map((word, index) => ({ day: lesson.day, index, word })));
+    }
+
+    function dueWordItems() {
+      const now = Date.now();
+      return allWordItems().filter(item => {
+        const review = state.wordSchedule[wordReviewKey(item.day, item.index)];
+        return !review || review.nextDue <= now;
+      }).sort((a, b) => {
+        const ar = state.wordSchedule[wordReviewKey(a.day, a.index)];
+        const br = state.wordSchedule[wordReviewKey(b.day, b.index)];
+        if (!ar && br) return -1;
+        if (ar && !br) return 1;
+        return (ar?.nextDue || 0) - (br?.nextDue || 0);
+      });
     }
 
     function renderWords(dayNumber) {
@@ -1049,6 +1325,7 @@
         if (!saved.correct.includes(index)) saved.correct.push(index);
         saved.lastIndex = (index + 1) % LESSONS[day - 1].words.length;
         state.wordProgress[day] = saved;
+        scheduleWordReview(day, index, true);
         recordActivity();
         saveState();
         slot.innerHTML = `<div class="word-feedback"><strong>정답입니다.</strong><br><span lang="ja">${esc(word.target)} · ${esc(word.kana)}</span><br>${esc(word.korean)} · ${esc(word.meaning)}<button class="btn success small full" style="margin-top:11px" id="nextWord">다음 단어</button></div>`;
@@ -1058,9 +1335,74 @@
         speak(word.target);
         return;
       }
+      scheduleWordReview(day, index, false);
+      saveState();
       slot.innerHTML = `<div class="word-feedback wrong"><strong>한 번 더 확인해 볼까요?</strong><br>정답은 <b lang="ja">${esc(word.target)}</b> / <span lang="ja">${esc(word.kana)}</span>입니다.<br>${esc(word.korean)}로 소리 내어 읽고 다시 입력해 보세요.</div>`;
       input.select();
       speak(word.target, .62);
+    }
+
+    function renderMaintenance() {
+      const due = dueWordItems();
+      const active = activeMistakes();
+      const fallback = allWordItems();
+      const item = due[0] || fallback[(state.activity.length * 7) % fallback.length];
+      const review = state.wordSchedule[wordReviewKey(item.day, item.index)];
+      $main.innerHTML = `<div class="view words-wrap">
+        <p class="eyebrow">maintenance loop · 오늘의 복습</p>
+        <h1 class="page-title">끝난 과정을<br>실제 실력으로.</h1>
+        <p class="lead">새 진도가 끝난 뒤에는 기억이 흐려지기 전에 다시 떠올리는 복습으로 전환됩니다. 맞힌 단어는 1일, 1주, 1개월 뒤에 다시 나옵니다.</p>
+        <div class="metric-row" style="margin-top:20px">
+          <div class="metric"><strong>${due.length}</strong><span>복습 대기 단어</span></div>
+          <div class="metric"><strong>${active.length}</strong><span>문장 오답</span></div>
+          <div class="metric"><strong>${Object.keys(state.wordSchedule).length}</strong><span>학습한 단어</span></div>
+        </div>
+
+        <section class="word-quiz" aria-labelledby="maintenance-title">
+          <p class="eyebrow">${due.length ? '지금 복습할 단어' : '오늘의 자유 인출'}</p>
+          <h2 id="maintenance-title">“${esc(item.word.meaning)}”의 일본어는?</h2>
+          <p class="answer-help">Day ${item.day} · ${review ? `${review.stage}단계 복습` : '첫 확인'}</p>
+          <label class="tiny" for="maintenanceAnswer">한자나 히라가나로 입력</label>
+          <div class="input-wrap" style="margin-top:8px">
+            <input class="answer-input" id="maintenanceAnswer" lang="ja" type="text" autocomplete="off" spellcheck="false" placeholder="ここに入力してください">
+            <button class="btn red" id="checkMaintenance" type="button">확인</button>
+          </div>
+          <div id="maintenanceFeedback" aria-live="polite"></div>
+        </section>
+
+        <div class="hero-actions">
+          ${active.length ? '<button class="btn ghost" id="maintenanceMistakes">문장 오답도 복습하기</button>' : ''}
+          <button class="btn ghost" id="maintenancePlan">28일 진도 다시 보기</button>
+        </div>
+      </div>`;
+
+      const input = document.getElementById('maintenanceAnswer');
+      const check = () => {
+        const value = input.value.trim();
+        const slot = document.getElementById('maintenanceFeedback');
+        if (!value) { toast('일본어 단어를 입력해 주세요.'); return; }
+        const result = evaluate(value, item.word);
+        if (result.status === 'correct') {
+          scheduleWordReview(item.day, item.index, true);
+          recordActivity();
+          saveState();
+          slot.innerHTML = `<div class="word-feedback"><strong>정답입니다.</strong><br><span lang="ja">${esc(item.word.target)} · ${esc(item.word.kana)}</span><br>${esc(item.word.korean)}<button class="btn success small full" style="margin-top:11px" id="nextMaintenance">다음 복습</button></div>`;
+          input.disabled = true;
+          document.getElementById('checkMaintenance').disabled = true;
+          document.getElementById('nextMaintenance').addEventListener('click', renderMaintenance);
+          speak(item.word.target);
+        } else {
+          scheduleWordReview(item.day, item.index, false);
+          saveState();
+          slot.innerHTML = `<div class="word-feedback wrong"><strong>아직 기억에 덜 붙었어요.</strong><br>정답은 <b lang="ja">${esc(item.word.target)}</b> / ${esc(item.word.kana)}입니다.<br>${esc(item.word.korean)}로 읽고 다시 입력해 보세요.</div>`;
+          input.select();
+          speak(item.word.target, .62);
+        }
+      };
+      document.getElementById('checkMaintenance').addEventListener('click', check);
+      input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing) check(); });
+      document.getElementById('maintenanceMistakes')?.addEventListener('click', startReview);
+      document.getElementById('maintenancePlan').addEventListener('click', () => navigate('plan'));
     }
 
     function readingLines(step) {
@@ -1290,12 +1632,12 @@
         <div class="complete-mark" aria-hidden="true">完了</div>
         <p class="eyebrow">Day ${day} complete</p>
         <h1>${esc(lesson.title)} 완료</h1>
-        <p>${day < LESSONS.length ? '오늘 배운 문장은 오답 노트와 다음 학습의 복습 문장으로 이어집니다.' : '7일 동안 쌓은 문장을 이제 실제 대화에서 꺼내 써 보세요.'}</p>
-        <div class="hero-actions" style="justify-content:center"><button class="btn red" id="completeHome">오늘 화면으로</button>${day < LESSONS.length ? `<button class="btn ghost" id="nextDay">Day ${day + 1} 미리 보기</button>` : '<button class="btn ghost" id="reviewAfter">오답 복습하기</button>'}</div>
+        <p>${day < COURSE_DAYS ? '오늘 배운 문장은 오답 노트와 다음 학습의 복습 문장으로 이어집니다.' : '28일 핵심 과정을 완주했습니다. 이제부터는 단어를 1일·1주·1개월 간격으로 다시 꺼내고, 틀린 문장을 반복하는 유지 학습이 시작됩니다.'}</p>
+        <div class="hero-actions" style="justify-content:center"><button class="btn red" id="completeHome">오늘 화면으로</button>${day < COURSE_DAYS ? `<button class="btn ghost" id="nextDay">Day ${day + 1} 미리 보기</button>` : '<button class="btn ghost" id="maintenanceAfter">맞춤 복습 시작</button>'}</div>
       </section></div>`;
       document.getElementById('completeHome').addEventListener('click', () => navigate('home'));
       document.getElementById('nextDay')?.addEventListener('click', () => navigate('plan'));
-      document.getElementById('reviewAfter')?.addEventListener('click', () => navigate('review'));
+      document.getElementById('maintenanceAfter')?.addEventListener('click', () => navigate('maintenance'));
     }
 
     function speak(text, rate = state.settings.speechRate) {
