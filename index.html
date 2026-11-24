@@ -240,6 +240,30 @@
     .preview-line .jp { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 1.18rem; font-weight: 700; }
     .preview-line .kr { margin-top: 3px; color: var(--muted); font-size: .78rem; }
 
+    .word-preview-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 17px; }
+    .word-chip { padding: 9px 12px; border-radius: 12px; color: var(--indigo); background: var(--indigo-soft); font-size: .82rem; font-weight: 800; }
+    .word-chip small { display: block; margin-top: 2px; color: var(--muted); font-size: .68rem; font-weight: 600; }
+    .day-tabs { display: flex; gap: 7px; overflow-x: auto; margin: 20px 0 16px; padding: 2px 2px 7px; scrollbar-width: thin; }
+    .day-tab { min-width: 48px; min-height: 44px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 13px; color: var(--muted); background: rgba(255,253,248,.75); cursor: pointer; font-size: .8rem; font-weight: 800; }
+    .day-tab.active { color: white; border-color: var(--vermilion); background: var(--vermilion); }
+    .day-tab:disabled { opacity: .38; cursor: not-allowed; }
+    .word-grid { display: grid; gap: 11px; }
+    .word-card { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 16px; border: 1px solid rgba(70,54,35,.11); border-radius: 18px; background: var(--surface); box-shadow: 0 1px 2px rgba(42,32,20,.04), 0 7px 18px rgba(42,32,20,.05); }
+    .word-card.learned { border-color: rgba(47,114,89,.28); background: linear-gradient(135deg, var(--surface), var(--green-soft)); }
+    .word-target { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 1.32rem; font-weight: 800; }
+    .word-kana { margin-top: 3px; color: var(--indigo); font-size: .84rem; }
+    .word-korean { margin-top: 2px; color: var(--vermilion); font-size: .78rem; font-weight: 700; }
+    .word-meaning { margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .word-listen { width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--indigo); background: transparent; cursor: pointer; font-weight: 900; }
+    .word-quiz { margin-top: 16px; padding: 20px; border-radius: 24px; color: white; background: var(--indigo); box-shadow: 0 12px 30px rgba(36,59,90,.17); }
+    .word-quiz .eyebrow { color: #f2b7aa; }
+    .word-quiz h2 { margin: 0; font-family: "Yu Mincho", serif; font-size: 1.35rem; }
+    .quiz-meaning { margin: 12px 0 16px; font-size: 1.25rem; font-weight: 800; }
+    .word-quiz .answer-input { border-color: rgba(255,255,255,.35); }
+    .word-quiz .answer-help { color: rgba(255,255,255,.72); }
+    .word-feedback { margin-top: 12px; padding: 13px; border-radius: 14px; color: var(--ink); background: var(--green-soft); font-size: .86rem; line-height: 1.6; }
+    .word-feedback.wrong { background: var(--vermilion-soft); }
+
     .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .metric { padding: 14px 10px; border-radius: 16px; background: var(--paper); text-align: center; }
     .metric strong { display: block; color: var(--indigo); font-family: Georgia, serif; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
@@ -411,7 +435,7 @@
       right: 0;
       bottom: 0;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       min-height: var(--nav-height);
       padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
       border-top: 1px solid rgba(70,54,35,.14);
@@ -480,7 +504,7 @@
       .home-grid { grid-template-columns: minmax(0, 1.45fr) minmax(250px, .75fr); }
       .home-grid .today-card { grid-row: span 2; }
       .lesson-wrap { max-width: 820px; margin: 0 auto; }
-      .plan-wrap, .review-wrap, .settings-wrap { max-width: 860px; margin: 0 auto; }
+      .plan-wrap, .review-wrap, .settings-wrap, .words-wrap { max-width: 860px; margin: 0 auto; }
       .dialogue-stage { padding: 32px 30px 28px; }
       .answer-panel { padding: 22px; }
       .toast { bottom: 28px; }
@@ -504,6 +528,7 @@
       .input-wrap .btn.icon-only { width: 100%; }
       .answer-actions { flex-direction: column; }
       .answer-actions .btn { width: 100%; }
+      .word-quiz .input-wrap .btn { width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -551,6 +576,14 @@
         title: '첫인사와 자기소개',
         short: '처음 만난 동료에게 나를 소개하기',
         scene: '첫 출근 날, 일본인 동료에게 정중하게 인사합니다.',
+        words: [
+          { target: '初めまして', kana: 'はじめまして', korean: '하지메마시테', meaning: '처음 뵙겠습니다' },
+          { target: '韓国', kana: 'かんこく', korean: '칸코쿠', meaning: '한국' },
+          { target: '会社', kana: 'かいしゃ', korean: '카이샤', meaning: '회사' },
+          { target: '人事', kana: 'じんじ', korean: '진지', meaning: '인사 업무' },
+          { target: '給与計算', kana: 'きゅうよけいさん', korean: '큐-요케-산', meaning: '급여 계산' },
+          { target: '担当', kana: 'たんとう', korean: '탄토-', meaning: '담당' }
+        ],
         steps: [
           { prompt: '“처음 뵙겠습니다.”라고 인사해 보세요.', target: '初めまして。', kana: 'はじめまして。', korean: '하지메마시테.', meaning: '처음 뵙겠습니다.', accepted: ['はじめまして。'] },
           { prompt: '“배사라고 합니다.”라고 정중하게 소개해 보세요.', target: 'バエサと申します。', kana: 'バエサともうします。', korean: '바에사 토 모-시마스.', meaning: '배사라고 합니다.', accepted: ['バエサともうします。'] },
@@ -564,6 +597,14 @@
         title: '업무와 담당 설명',
         short: '내 부서와 담당 업무를 자연스럽게 말하기',
         scene: '동료가 담당 업무를 묻습니다. 짧고 명확하게 답합니다.',
+        words: [
+          { target: '人事部', kana: 'じんじぶ', korean: '진지부', meaning: '인사부' },
+          { target: '働く', kana: 'はたらく', korean: '하타라쿠', meaning: '일하다' },
+          { target: '勤怠管理', kana: 'きんたいかんり', korean: '킨타이칸리', meaning: '근태 관리' },
+          { target: '日本語', kana: 'にほんご', korean: '니혼고', meaning: '일본어' },
+          { target: '勉強', kana: 'べんきょう', korean: '벤쿄-', meaning: '공부' },
+          { target: '教える', kana: 'おしえる', korean: '오시에루', meaning: '가르치다' }
+        ],
         steps: [
           { prompt: '“저는 인사부에서 일하고 있습니다.”라고 말해 보세요.', target: '私は人事部で働いています。', kana: 'わたしはじんじぶではたらいています。', korean: '와타시와 진지부데 하타라이테이마스.', meaning: '저는 인사부에서 일하고 있습니다.', accepted: ['わたしはじんじぶではたらいています。'] },
           { prompt: '“급여 계산과 근태 관리를 담당하고 있습니다.”라고 말해 보세요.', target: '給与計算と勤怠管理を担当しています。', kana: 'きゅうよけいさんときんたいかんりをたんとうしています。', korean: '큐-요케-산토 킨타이칸리오 탄토-시테이마스.', meaning: '급여 계산과 근태 관리를 담당하고 있습니다.', accepted: ['きゅうよけいさんときんたいかんりをたんとうしています。'] },
@@ -576,6 +617,14 @@
         title: '질문하고 되묻기',
         short: '상대의 업무를 묻고 대화를 이어가기',
         scene: '점심시간, 새 동료와 서로의 업무에 대해 이야기합니다.',
+        words: [
+          { target: '仕事', kana: 'しごと', korean: '시고토', meaning: '일, 업무' },
+          { target: 'どんな', kana: 'どんな', korean: '돈나', meaning: '어떤' },
+          { target: 'どのくらい', kana: 'どのくらい', korean: '도노쿠라이', meaning: '어느 정도' },
+          { target: '三年', kana: 'さんねん', korean: '산넨', meaning: '3년' },
+          { target: '働く', kana: 'はたらく', korean: '하타라쿠', meaning: '일하다' },
+          { target: 'そうなんですね', kana: 'そうなんですね', korean: '소-난데스네', meaning: '그렇군요' }
+        ],
         steps: [
           { prompt: '“어떤 일을 하고 계세요?”라고 물어보세요.', target: 'どんな仕事をしていますか。', kana: 'どんなしごとをしていますか。', korean: '돈나 시고토오 시테이마스카.', meaning: '어떤 일을 하고 계세요?', accepted: ['どんなしごとをしていますか。'] },
           { prompt: '“얼마나 오래 일하셨어요?”라고 물어보세요.', target: 'どのくらい働いていますか。', kana: 'どのくらいはたらいていますか。', korean: '도노쿠라이 하타라이테이마스카.', meaning: '얼마나 오래 일하셨어요?', accepted: ['どのくらいはたらいていますか。'] },
@@ -588,6 +637,15 @@
         title: '정중하게 도움 요청',
         short: '못 알아들었을 때 부담 없이 다시 묻기',
         scene: '회의 중 설명을 놓쳤습니다. 정중한 표현으로 도움을 요청합니다.',
+        words: [
+          { target: 'もう一度', kana: 'もういちど', korean: '모-이치도', meaning: '한 번 더' },
+          { target: '少し', kana: 'すこし', korean: '스코시', meaning: '조금' },
+          { target: 'ゆっくり', kana: 'ゆっくり', korean: '윗쿠리', meaning: '천천히' },
+          { target: '話す', kana: 'はなす', korean: '하나스', meaning: '말하다' },
+          { target: '言葉', kana: 'ことば', korean: '코토바', meaning: '말, 단어' },
+          { target: '意味', kana: 'いみ', korean: '이미', meaning: '의미' },
+          { target: '分かる', kana: 'わかる', korean: '와카루', meaning: '알다, 이해하다' }
+        ],
         steps: [
           { prompt: '“죄송하지만, 한 번 더 부탁드립니다.”라고 말해 보세요.', target: 'すみませんが、もう一度お願いします。', kana: 'すみませんが、もういちどおねがいします。', korean: '스미마센가, 모-이치도 오네가이시마스.', meaning: '죄송하지만, 한 번 더 부탁드립니다.', accepted: ['すみませんがもういちどおねがいします。'] },
           { prompt: '“조금 천천히 말씀해 주세요.”라고 부탁해 보세요.', target: 'もう少しゆっくり話してください。', kana: 'もうすこしゆっくりはなしてください。', korean: '모-스코시 윳쿠리 하나시테 쿠다사이.', meaning: '조금 천천히 말씀해 주세요.', accepted: ['もうすこしゆっくりはなしてください。'] },
@@ -600,6 +658,15 @@
         title: '일정과 회의',
         short: '오늘 일정과 가능한 시간을 말하기',
         scene: '동료와 오후 회의 시간을 조율합니다.',
+        words: [
+          { target: '今日', kana: 'きょう', korean: '쿄-', meaning: '오늘' },
+          { target: '午後', kana: 'ごご', korean: '고고', meaning: '오후' },
+          { target: '会議', kana: 'かいぎ', korean: '카이기', meaning: '회의' },
+          { target: '三時', kana: 'さんじ', korean: '산지', meaning: '3시' },
+          { target: '大丈夫', kana: 'だいじょうぶ', korean: '다이죠-부', meaning: '괜찮음, 가능함' },
+          { target: '会議室', kana: 'かいぎしつ', korean: '카이기시츠', meaning: '회의실' },
+          { target: '後で', kana: 'あとで', korean: '아토데', meaning: '이따가, 나중에' }
+        ],
         steps: [
           { prompt: '“오늘 오후에 회의가 있습니다.”라고 말해 보세요.', target: '今日の午後、会議があります。', kana: 'きょうのごご、かいぎがあります。', korean: '쿄-노 고고, 카이기가 아리마스.', meaning: '오늘 오후에 회의가 있습니다.', accepted: ['きょうのごごかいぎがあります。'] },
           { prompt: '“세 시부터 괜찮습니다.”라고 말해 보세요.', target: '三時から大丈夫です。', kana: 'さんじからだいじょうぶです。', korean: '산지카라 다이죠-부데스.', meaning: '세 시부터 괜찮습니다.', accepted: ['さんじからだいじょうぶです。', '3時から大丈夫です。'] },
@@ -612,6 +679,15 @@
         title: '직장 기본 회화',
         short: '출근부터 퇴근까지 자주 쓰는 표현',
         scene: '하루 동안 동료와 주고받는 짧은 인사를 연습합니다.',
+        words: [
+          { target: 'お疲れ様', kana: 'おつかれさま', korean: '오츠카레사마', meaning: '수고하셨습니다' },
+          { target: '資料', kana: 'しりょう', korean: '시료-', meaning: '자료' },
+          { target: '確認', kana: 'かくにん', korean: '카쿠닌', meaning: '확인' },
+          { target: 'すぐに', kana: 'すぐに', korean: '스구니', meaning: '곧, 바로' },
+          { target: '送る', kana: 'おくる', korean: '오쿠루', meaning: '보내다' },
+          { target: 'お先に', kana: 'おさきに', korean: '오사키니', meaning: '먼저' },
+          { target: '失礼', kana: 'しつれい', korean: '시츠레이', meaning: '실례' }
+        ],
         steps: [
           { prompt: '출근한 동료에게 “안녕하세요. 수고 많으십니다.”라고 인사해 보세요.', target: 'おはようございます。お疲れ様です。', kana: 'おはようございます。おつかれさまです。', korean: '오하요-고자이마스. 오츠카레사마데스.', meaning: '안녕하세요. 수고 많으십니다.', accepted: ['おはようございますおつかれさまです。'] },
           { prompt: '“자료를 확인하겠습니다.”라고 말해 보세요.', target: '資料を確認します。', kana: 'しりょうをかくにんします。', korean: '시료-오 카쿠닌시마스.', meaning: '자료를 확인하겠습니다.', accepted: ['しりょうをかくにんします。'] },
@@ -624,6 +700,14 @@
         title: '1주차 회화 복습',
         short: '배운 표현을 연결해 실제 대화처럼 말하기',
         scene: '새 일본인 동료를 처음 만나 업무 이야기를 나눕니다.',
+        words: [
+          { target: '申す', kana: 'もうす', korean: '모-스', meaning: '말하다(격식)' },
+          { target: '主に', kana: 'おもに', korean: '오모니', meaning: '주로' },
+          { target: '担当', kana: 'たんとう', korean: '탄토-', meaning: '담당' },
+          { target: 'ゆっくり', kana: 'ゆっくり', korean: '윗쿠리', meaning: '천천히' },
+          { target: '話す', kana: 'はなす', korean: '하나스', meaning: '말하다' },
+          { target: 'お願い', kana: 'おねがい', korean: '오네가이', meaning: '부탁' }
+        ],
         steps: [
           { prompt: '처음 만난 동료에게 이름까지 정중하게 소개해 보세요.', target: '初めまして。バエサと申します。', kana: 'はじめまして。バエサともうします。', korean: '하지메마시테. 바에사 토 모-시마스.', meaning: '처음 뵙겠습니다. 배사라고 합니다.', accepted: ['はじめましてバエサともうします。'] },
           { prompt: '인사부에서 일하며 담당 업무가 급여 계산이라고 말해 보세요.', target: '人事部で働いています。主に給与計算を担当しています。', kana: 'じんじぶではたらいています。おもにきゅうよけいさんをたんとうしています。', korean: '진지부데 하타라이테이마스. 오모니 큐-요케-산오 탄토-시테이마스.', meaning: '인사부에서 일합니다. 주로 급여 계산을 담당합니다.', accepted: ['じんじぶではたらいていますおもにきゅうよけいさんをたんとうしています。'] },
@@ -637,6 +721,7 @@
     const DEFAULT_STATE = {
       version: 1,
       progress: {},
+      wordProgress: {},
       mistakes: {},
       activity: [],
       settings: { showKana: true, showKorean: true, autoSpeak: false, speechRate: .82 }
@@ -660,6 +745,7 @@
           ...structuredClone(DEFAULT_STATE),
           ...saved,
           progress: saved.progress || {},
+          wordProgress: saved.wordProgress || {},
           mistakes: saved.mistakes || {},
           activity: Array.isArray(saved.activity) ? saved.activity : [],
           settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) }
@@ -728,6 +814,7 @@
       return [
         ['home', '今日', '오늘'],
         ['plan', '道', '진도'],
+        ['words', '単', '단어'],
         ['review', '直', '오답'],
         ['settings', '設', '설정']
       ];
@@ -762,6 +849,7 @@
       const raw = location.hash.replace(/^#\/?/, '') || 'home';
       const [view, p1, p2] = raw.split('/');
       if (view === 'lesson') return { view, day: Number(p1) || 1, step: Number(p2) || 0 };
+      if (view === 'words') return { view, day: Number(p1) || currentDay() };
       return { view: ['home','plan','review','settings'].includes(view) ? view : 'home' };
     }
 
@@ -779,6 +867,7 @@
       const route = getRoute();
       if (route.view === 'lesson') renderLesson(route.day, route.step);
       else if (route.view === 'plan') renderPlan();
+      else if (route.view === 'words') renderWords(route.day);
       else if (route.view === 'review') renderReview();
       else if (route.view === 'settings') renderSettings();
       else renderHome();
@@ -824,6 +913,12 @@
             <button class="btn soft full" id="previewListen">대표 문장 이어 듣기</button>
           </section>
 
+          <section class="paper-card" aria-labelledby="today-words-title">
+            <div class="section-head"><div><h2 id="today-words-title">오늘의 핵심 단어</h2><p>${lesson.words.length}개를 보고 듣고 직접 입력해 보세요.</p></div><span class="seal" aria-hidden="true">単</span></div>
+            <div class="word-preview-row">${lesson.words.slice(0, 4).map(word => `<span class="word-chip">${esc(word.target)}<small>${esc(word.meaning)}</small></span>`).join('')}</div>
+            <button class="btn soft full" id="openWords">단어 학습하기</button>
+          </section>
+
           <section class="paper-card" aria-labelledby="record-title">
             <div class="section-head"><div><h2 id="record-title">나의 기록</h2><p>브라우저에 자동 저장됩니다.</p></div></div>
             <div class="metric-row">
@@ -849,6 +944,7 @@
         navigate(`lesson/${startDay}/${startStep}`);
       });
       document.getElementById('previewListen').addEventListener('click', () => speak(lesson.steps.slice(0, 3).map(s => s.target).join(' ')));
+      document.getElementById('openWords').addEventListener('click', () => navigate(`words/${day}`));
       document.getElementById('quickReview')?.addEventListener('click', startReview);
       document.getElementById('openReview')?.addEventListener('click', () => navigate('review'));
     }
@@ -878,6 +974,93 @@
         reviewContext = null;
         navigate(`lesson/${day}/${step}`);
       }));
+    }
+
+    function wordState(day) {
+      const saved = state.wordProgress[day] || {};
+      const correct = Array.isArray(saved.correct) ? saved.correct.filter(Number.isInteger) : [];
+      return { correct: [...new Set(correct)], lastIndex: Number.isInteger(saved.lastIndex) ? saved.lastIndex : 0 };
+    }
+
+    function renderWords(dayNumber) {
+      const day = Math.max(1, Math.min(Number(dayNumber) || currentDay(), LESSONS.length));
+      if (!isUnlocked(day)) { navigate(`words/${currentDay()}`, true); return; }
+      const lesson = LESSONS[day - 1];
+      const saved = wordState(day);
+      const correct = new Set(saved.correct);
+      const firstUnknown = lesson.words.findIndex((_, index) => !correct.has(index));
+      const quizIndex = firstUnknown >= 0 ? firstUnknown : Math.min(saved.lastIndex, lesson.words.length - 1);
+      const quizWord = lesson.words[quizIndex];
+
+      $main.innerHTML = `<div class="view words-wrap">
+        <p class="eyebrow">Day ${day} · vocabulary</p>
+        <h1 class="page-title">문장 속 단어를<br>내 말로 만들기.</h1>
+        <p class="lead">${esc(lesson.title)}에서 반복되는 핵심 단어입니다. 한자와 읽기를 같이 외우고 한글 발음으로 소리를 확인하세요.</p>
+
+        <div class="day-tabs" aria-label="단어 학습 일차">
+          ${LESSONS.map(item => `<button class="day-tab ${item.day === day ? 'active' : ''}" data-word-day="${item.day}" ${!isUnlocked(item.day) ? 'disabled' : ''} aria-current="${item.day === day ? 'page' : 'false'}">D${item.day}</button>`).join('')}
+        </div>
+
+        <section class="paper-card" aria-labelledby="word-list-title">
+          <div class="section-head"><div><h2 id="word-list-title">Day ${day} 단어 ${lesson.words.length}개</h2><p>${correct.size}개를 퀴즈에서 맞혔어요.</p></div><span class="seal" aria-hidden="true">語</span></div>
+          <div class="word-grid">
+            ${lesson.words.map((word, index) => `<article class="word-card ${correct.has(index) ? 'learned' : ''}">
+              <div>
+                <div class="word-target" lang="ja">${esc(word.target)} ${correct.has(index) ? '<span class="tiny" aria-label="퀴즈 정답">✓</span>' : ''}</div>
+                ${state.settings.showKana ? `<div class="word-kana" lang="ja">${esc(word.kana)}</div>` : ''}
+                ${state.settings.showKorean ? `<div class="word-korean">${esc(word.korean)}</div>` : ''}
+                <div class="word-meaning">${esc(word.meaning)}</div>
+              </div>
+              <button class="word-listen" data-word-speak="${index}" aria-label="${esc(word.target)} 발음 듣기">▶</button>
+            </article>`).join('')}
+          </div>
+        </section>
+
+        <section class="word-quiz" aria-labelledby="word-quiz-title">
+          <p class="eyebrow">단어 퀴즈 · ${quizIndex + 1}/${lesson.words.length}</p>
+          <h2 id="word-quiz-title">이 뜻의 일본어는?</h2>
+          <div class="quiz-meaning">${esc(quizWord.meaning)}</div>
+          <label class="tiny" for="wordAnswer">한자나 히라가나로 입력</label>
+          <div class="input-wrap" style="margin-top:8px">
+            <input class="answer-input" id="wordAnswer" lang="ja" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力してください">
+            <button class="btn red" id="checkWord" type="button">확인</button>
+          </div>
+          <p class="answer-help">한자와 히라가나 모두 정답으로 채점합니다.</p>
+          <div id="wordFeedback" aria-live="polite"></div>
+        </section>
+      </div>`;
+
+      document.querySelectorAll('[data-word-day]').forEach(button => button.addEventListener('click', () => navigate(`words/${button.dataset.wordDay}`)));
+      document.querySelectorAll('[data-word-speak]').forEach(button => button.addEventListener('click', () => speak(lesson.words[Number(button.dataset.wordSpeak)].target)));
+      document.getElementById('checkWord').addEventListener('click', () => checkWordAnswer(day, quizIndex));
+      const input = document.getElementById('wordAnswer');
+      input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing) checkWordAnswer(day, quizIndex); });
+    }
+
+    function checkWordAnswer(day, index) {
+      const input = document.getElementById('wordAnswer');
+      const slot = document.getElementById('wordFeedback');
+      const word = LESSONS[day - 1].words[index];
+      const value = input.value.trim();
+      if (!value) { toast('일본어 단어를 입력해 주세요.'); input.focus(); return; }
+      const result = evaluate(value, word);
+      if (result.status === 'correct') {
+        const saved = wordState(day);
+        if (!saved.correct.includes(index)) saved.correct.push(index);
+        saved.lastIndex = (index + 1) % LESSONS[day - 1].words.length;
+        state.wordProgress[day] = saved;
+        recordActivity();
+        saveState();
+        slot.innerHTML = `<div class="word-feedback"><strong>정답입니다.</strong><br><span lang="ja">${esc(word.target)} · ${esc(word.kana)}</span><br>${esc(word.korean)} · ${esc(word.meaning)}<button class="btn success small full" style="margin-top:11px" id="nextWord">다음 단어</button></div>`;
+        input.disabled = true;
+        document.getElementById('checkWord').disabled = true;
+        document.getElementById('nextWord').addEventListener('click', () => renderWords(day));
+        speak(word.target);
+        return;
+      }
+      slot.innerHTML = `<div class="word-feedback wrong"><strong>한 번 더 확인해 볼까요?</strong><br>정답은 <b lang="ja">${esc(word.target)}</b> / <span lang="ja">${esc(word.kana)}</span>입니다.<br>${esc(word.korean)}로 소리 내어 읽고 다시 입력해 보세요.</div>`;
+      input.select();
+      speak(word.target, .62);
     }
 
     function readingLines(step) {
