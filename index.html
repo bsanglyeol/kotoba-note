@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4efe5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ことばノート">
+  <title>ことばノート · 맞춤 일본어 회화</title>
+  <style>
+    :root {
+      --paper: #f4efe5;
+      --paper-deep: #eae1d2;
+      --surface: #fffdf8;
+      --ink: #202a35;
+      --muted: #6f756f;
+      --indigo: #243b5a;
+      --indigo-soft: #e8edf2;
+      --vermilion: #d4513f;
+      --vermilion-soft: #f9e6df;
+      --green: #2f7259;
+      --green-soft: #e3f1e9;
+      --amber: #9b641e;
+      --amber-soft: #fff1d4;
+      --line: #d9d1c4;
+      --shadow: 0 1px 2px rgba(42, 32, 20, .05), 0 8px 24px rgba(42, 32, 20, .07);
+      --ease: cubic-bezier(.23, 1, .32, 1);
+      --radius: 24px;
+      --nav-height: 76px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(212, 81, 63, .07), transparent 24rem),
+        radial-gradient(circle at 88% 42%, rgba(36, 59, 90, .07), transparent 28rem),
+        var(--paper);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    button, input, textarea, select { font: inherit; }
+    button { touch-action: manipulation; }
+    button:active { transform: scale(.96); }
+    button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(212, 81, 63, .38);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: -80px;
+      z-index: 100;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: white;
+      background: var(--indigo);
+      transition: top 180ms var(--ease);
+    }
+    .skip-link:focus { top: 12px; }
+
+    .app-shell { width: min(1180px, 100%); margin: 0 auto; }
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: calc(18px + env(safe-area-inset-top)) 20px 14px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--vermilion);
+      box-shadow: inset 0 0 0 5px rgba(255,255,255,.2);
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+    .brand-title {
+      margin: 0;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", "Batang", serif;
+      font-size: 1.25rem;
+      letter-spacing: -.02em;
+    }
+    .brand-sub { color: var(--muted); font-size: .76rem; margin-top: 2px; }
+    .header-status { display: flex; align-items: center; gap: 9px; }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid rgba(36,59,90,.12);
+      border-radius: 999px;
+      color: var(--indigo);
+      background: rgba(255,253,248,.72);
+      backdrop-filter: blur(10px);
+      font-size: .82rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .desktop-layout { display: block; }
+    .side-nav { display: none; }
+    main { min-width: 0; padding: 10px 16px 26px; }
+
+    .view { animation: view-in 420ms var(--ease) both; }
+    @keyframes view-in { from { opacity: 0; transform: translateY(10px); } }
+
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--vermilion);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .page-title {
+      margin: 0;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", "Batang", serif;
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+    }
+    .lead { max-width: 56ch; margin: 12px 0 0; color: var(--muted); line-height: 1.75; }
+    .muted { color: var(--muted); }
+    .tiny { font-size: .76rem; }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      min-height: 310px;
+      padding: 28px 24px 30px;
+      border: 1px solid rgba(70,54,35,.10);
+      border-radius: 32px;
+      background: rgba(255,253,248,.9);
+      box-shadow: var(--shadow);
+    }
+    .hero-panel::after {
+      content: "会話";
+      position: absolute;
+      right: -18px;
+      bottom: -46px;
+      color: rgba(36,59,90,.055);
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+      font-size: 9.5rem;
+      line-height: 1;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+    }
+    .hero-copy { position: relative; z-index: 1; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      cursor: pointer;
+      color: #fff;
+      background: var(--indigo);
+      box-shadow: 0 6px 16px rgba(36,59,90,.16);
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform 160ms var(--ease), box-shadow 180ms var(--ease), background-color 180ms var(--ease);
+    }
+    .btn:hover { box-shadow: 0 10px 22px rgba(36,59,90,.22); }
+    .btn.red { background: var(--vermilion); box-shadow: 0 6px 16px rgba(212,81,63,.18); }
+    .btn.ghost { color: var(--ink); background: transparent; border-color: var(--line); box-shadow: none; }
+    .btn.soft { color: var(--indigo); background: var(--indigo-soft); box-shadow: none; }
+    .btn.success { background: var(--green); box-shadow: 0 6px 16px rgba(47,114,89,.18); }
+    .btn.small { min-height: 42px; padding: 9px 14px; font-size: .86rem; }
+    .btn.icon-only { width: 46px; padding: 0; flex: 0 0 auto; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }
+    .full { width: 100%; }
+
+    .progress-block { margin-top: 28px; max-width: 520px; }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; font-size: .82rem; font-weight: 700; }
+    .progress-track { overflow: hidden; height: 10px; border-radius: 999px; background: var(--paper-deep); }
+    .progress-fill { height: 100%; border-radius: inherit; background: var(--vermilion); transition: width 500ms var(--ease); }
+
+    .home-grid { display: grid; gap: 16px; margin-top: 16px; }
+    .paper-card {
+      padding: 20px;
+      border: 1px solid rgba(70,54,35,.11);
+      border-radius: var(--radius);
+      background: rgba(255,253,248,.87);
+      box-shadow: var(--shadow);
+    }
+    .section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+    .section-head h2, .paper-card h2 { margin: 0; font-size: 1.04rem; }
+    .section-head p { margin: 5px 0 0; color: var(--muted); font-size: .82rem; }
+    .seal {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--vermilion);
+      border-radius: 12px;
+      color: var(--vermilion);
+      font-family: "Yu Mincho", serif;
+      font-weight: 800;
+      transform: rotate(-4deg);
+      flex: 0 0 auto;
+    }
+
+    .today-lines { display: grid; gap: 11px; margin: 18px 0; }
+    .preview-line { display: grid; grid-template-columns: 54px 1fr; gap: 12px; align-items: baseline; }
+    .preview-line .num { color: var(--vermilion); font-family: Georgia, serif; font-size: .82rem; font-style: italic; }
+    .preview-line .jp { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: 1.18rem; font-weight: 700; }
+    .preview-line .kr { margin-top: 3px; color: var(--muted); font-size: .78rem; }
+
+    .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .metric { padding: 14px 10px; border-radius: 16px; background: var(--paper); text-align: center; }
+    .metric strong { display: block; color: var(--indigo); font-family: Georgia, serif; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+    .metric span { color: var(--muted); font-size: .72rem; }
+
+    .mistake-teaser { border-left: 5px solid var(--vermilion); }
+    .empty-ink { padding: 24px 10px; color: var(--muted); text-align: center; }
+
+    .timeline { position: relative; display: grid; gap: 0; margin-top: 22px; }
+    .timeline::before { content: ""; position: absolute; top: 24px; bottom: 24px; left: 20px; width: 1px; background: var(--line); }
+    .day-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      min-height: 88px;
+      padding: 10px 0;
+    }
+    .day-dot {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      background: var(--surface);
+      font-family: Georgia, serif;
+      font-weight: 700;
+    }
+    .day-row.current .day-dot { color: #fff; border-color: var(--vermilion); background: var(--vermilion); box-shadow: 0 0 0 5px var(--vermilion-soft); }
+    .day-row.done .day-dot { color: #fff; border-color: var(--green); background: var(--green); }
+    .day-row.locked { opacity: .58; }
+    .day-copy { min-width: 0; }
+    .day-copy strong { display: block; font-size: .96rem; }
+    .day-copy span { display: block; overflow: hidden; margin-top: 4px; color: var(--muted); font-size: .8rem; text-overflow: ellipsis; white-space: nowrap; }
+    .day-action { min-width: 76px; }
+
+    .lesson-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+    .lesson-top .back-link { border: 0; color: var(--muted); background: transparent; cursor: pointer; min-height: 44px; padding: 8px 0; }
+    .step-counter { color: var(--muted); font-size: .78rem; font-variant-numeric: tabular-nums; }
+    .step-dots { display: flex; gap: 5px; flex: 1; max-width: 320px; }
+    .step-dots i { height: 6px; flex: 1; border-radius: 99px; background: var(--line); }
+    .step-dots i.done { background: var(--green); }
+    .step-dots i.current { background: var(--vermilion); }
+
+    .scene-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 13px 16px;
+      border: 1px solid rgba(36,59,90,.11);
+      border-radius: 18px;
+      color: var(--indigo);
+      background: var(--indigo-soft);
+      font-size: .85rem;
+    }
+    .scene-strip strong { flex: 0 0 auto; }
+
+    .dialogue-stage {
+      position: relative;
+      padding: 25px 20px 22px;
+      border: 1px solid rgba(70,54,35,.11);
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .speaker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--muted); font-size: .8rem; font-weight: 800; }
+    .avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: white; background: var(--indigo); }
+    .prompt-ko { margin: 0; font-size: 1rem; line-height: 1.65; }
+    .prompt-ko strong { color: var(--vermilion); }
+    .model-answer { margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+    .line-stack { display: grid; gap: 7px; }
+    .kanji-line { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(1.55rem, 6vw, 2.45rem); font-weight: 700; line-height: 1.35; letter-spacing: .015em; }
+    .kana-line { color: var(--indigo); font-size: 1rem; line-height: 1.55; }
+    .korean-line { color: var(--vermilion); font-size: .93rem; font-weight: 700; line-height: 1.55; }
+    .meaning-line { color: var(--muted); font-size: .84rem; line-height: 1.55; }
+    .listen-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .listen-btn {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--indigo);
+      background: transparent;
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 800;
+      transition: background-color 160ms var(--ease), transform 160ms var(--ease);
+    }
+    .listen-btn:hover { background: var(--indigo-soft); }
+
+    .answer-panel { margin-top: 14px; padding: 18px; border: 1px solid rgba(70,54,35,.11); border-radius: 22px; background: rgba(255,253,248,.88); }
+    .answer-panel label { display: block; margin-bottom: 9px; font-size: .82rem; font-weight: 800; }
+    .input-wrap { display: flex; gap: 8px; }
+    .answer-input {
+      min-width: 0;
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      color: var(--ink);
+      background: #fff;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", sans-serif;
+      font-size: 1.08rem;
+      transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+    }
+    .answer-input:focus { border-color: var(--vermilion); box-shadow: 0 0 0 4px rgba(212,81,63,.09); outline: 0; }
+    .answer-help { margin: 9px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.5; }
+    .answer-actions { display: flex; gap: 8px; margin-top: 14px; }
+
+    .feedback { margin-top: 14px; padding: 17px; border-radius: 18px; animation: feedback-in 280ms var(--ease) both; }
+    @keyframes feedback-in { from { opacity: 0; transform: translateY(6px) scale(.99); } }
+    .feedback.correct { color: #174d39; background: var(--green-soft); }
+    .feedback.near { color: #71450e; background: var(--amber-soft); }
+    .feedback.wrong { color: #7b2d22; background: var(--vermilion-soft); }
+    .feedback h3 { margin: 0 0 8px; font-size: 1rem; }
+    .feedback p { margin: 6px 0; font-size: .86rem; line-height: 1.65; }
+    .correction-box { display: grid; gap: 8px; margin: 12px 0; padding: 13px; border: 1px solid rgba(0,0,0,.08); border-radius: 13px; background: rgba(255,255,255,.52); }
+    .correction-box span { display: block; color: currentColor; font-size: .7rem; font-weight: 800; opacity: .72; }
+    .correction-box b { font-family: "Yu Mincho", serif; font-size: 1.05rem; }
+    .diff-remove { text-decoration: line-through; opacity: .68; }
+    .diff-add { padding: 1px 4px; border-radius: 5px; color: #174d39; background: #d5edde; }
+    .tip-list { margin: 10px 0 0; padding-left: 19px; }
+    .tip-list li { margin: 5px 0; font-size: .84rem; line-height: 1.55; }
+
+    .complete-panel { padding: 32px 22px; text-align: center; }
+    .complete-mark { display: grid; place-items: center; width: 82px; height: 82px; margin: 0 auto 18px; border: 3px double var(--vermilion); border-radius: 50%; color: var(--vermilion); font-family: "Yu Mincho", serif; font-size: 1.5rem; font-weight: 800; transform: rotate(-5deg); }
+    .complete-panel h1 { margin: 0; font-family: "Yu Mincho", serif; font-size: 2rem; }
+    .complete-panel p { color: var(--muted); line-height: 1.7; }
+
+    .review-list { display: grid; gap: 12px; margin-top: 18px; }
+    .mistake-card { padding: 17px; border-left: 5px solid var(--vermilion); border-radius: 4px 18px 18px 4px; background: var(--surface); box-shadow: var(--shadow); }
+    .mistake-card.resolved { border-left-color: var(--green); opacity: .75; }
+    .mistake-meta { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .72rem; }
+    .mistake-card .target { margin: 11px 0 4px; font-family: "Yu Mincho", serif; font-size: 1.16rem; font-weight: 700; }
+    .mistake-card .typed { color: var(--vermilion); font-size: .82rem; }
+    .mistake-card .card-actions { display: flex; gap: 8px; margin-top: 13px; }
+
+    .settings-list { display: grid; gap: 12px; margin-top: 20px; }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 54px; }
+    .setting-copy strong { display: block; font-size: .9rem; }
+    .setting-copy span { display: block; margin-top: 3px; color: var(--muted); font-size: .75rem; }
+    .switch { position: relative; width: 52px; height: 30px; flex: 0 0 auto; }
+    .switch input { position: absolute; opacity: 0; pointer-events: none; }
+    .switch span { position: absolute; inset: 0; border-radius: 99px; background: #c9c3b9; cursor: pointer; transition: background-color 180ms var(--ease); }
+    .switch span::after { content: ""; position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; border-radius: 50%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,.18); transition: transform 180ms var(--ease); }
+    .switch input:checked + span { background: var(--green); }
+    .switch input:checked + span::after { transform: translateX(22px); }
+    .switch input:focus-visible + span { outline: 3px solid rgba(212,81,63,.38); outline-offset: 3px; }
+    .range { width: 140px; accent-color: var(--vermilion); }
+    .note-box { padding: 15px; border-radius: 15px; color: #5e4b2d; background: #fff3d8; font-size: .82rem; line-height: 1.65; }
+    .steps-list { margin: 12px 0 0; padding-left: 22px; }
+    .steps-list li { margin: 8px 0; line-height: 1.6; }
+    .danger { color: #9c3024 !important; border-color: rgba(156,48,36,.3) !important; }
+    .file-label { cursor: pointer; }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      min-height: var(--nav-height);
+      padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(70,54,35,.14);
+      background: rgba(255,253,248,.94);
+      backdrop-filter: blur(16px);
+    }
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      min-height: 54px;
+      border: 0;
+      border-radius: 14px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-size: .69rem;
+      font-weight: 700;
+    }
+    .nav-btn .nav-glyph { font-family: Georgia, "Yu Mincho", serif; font-size: 1.15rem; line-height: 1; }
+    .nav-btn.active { color: var(--vermilion); background: var(--vermilion-soft); }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 14px);
+      max-width: min(90vw, 460px);
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: white;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(0,0,0,.2);
+      font-size: .83rem;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 12px);
+      transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (min-width: 760px) {
+      body { padding-bottom: 0; }
+      .masthead { padding: 24px 28px 18px; }
+      .desktop-layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 18px; padding: 0 28px 30px; }
+      .side-nav {
+        position: sticky;
+        top: 18px;
+        align-self: start;
+        display: grid;
+        gap: 7px;
+        padding: 12px;
+        border: 1px solid rgba(70,54,35,.10);
+        border-radius: 24px;
+        background: rgba(255,253,248,.72);
+        backdrop-filter: blur(12px);
+      }
+      .side-nav .nav-btn { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 0 14px; font-size: .84rem; }
+      .side-nav .nav-glyph { width: 22px; text-align: center; }
+      .bottom-nav { display: none; }
+      main { padding: 0 0 28px; }
+      .hero-panel { min-height: 360px; padding: 42px 40px; }
+      .home-grid { grid-template-columns: minmax(0, 1.45fr) minmax(250px, .75fr); }
+      .home-grid .today-card { grid-row: span 2; }
+      .lesson-wrap { max-width: 820px; margin: 0 auto; }
+      .plan-wrap, .review-wrap, .settings-wrap { max-width: 860px; margin: 0 auto; }
+      .dialogue-stage { padding: 32px 30px 28px; }
+      .answer-panel { padding: 22px; }
+      .toast { bottom: 28px; }
+    }
+
+    @media (min-width: 1040px) {
+      .desktop-layout { grid-template-columns: 228px minmax(0, 1fr); gap: 28px; }
+      .home-grid { grid-template-columns: minmax(0, 1.55fr) minmax(300px, .72fr); }
+      .hero-panel { padding-right: 34%; }
+    }
+
+    @media (max-width: 420px) {
+      .masthead { padding-left: 15px; padding-right: 15px; }
+      .header-status .status-pill:first-child { display: none; }
+      main { padding-left: 12px; padding-right: 12px; }
+      .hero-panel { padding: 24px 19px 26px; }
+      .page-title { font-size: 2.15rem; }
+      .metric-row { gap: 5px; }
+      .metric { padding: 12px 5px; }
+      .input-wrap { flex-wrap: wrap; }
+      .input-wrap .btn.icon-only { width: 100%; }
+      .answer-actions { flex-direction: column; }
+      .answer-actions .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <div class="app-shell">
+    <header class="masthead">
+      <div class="brand" aria-label="ことばノート 일본어 학습">
+        <div class="brand-mark" aria-hidden="true">話</div>
+        <div>
+          <h1 class="brand-title">ことばノート</h1>
+          <div class="brand-sub">말하면서 익히는 나만의 일본어</div>
+        </div>
+      </div>
+      <div class="header-status" aria-live="polite">
+        <span class="status-pill" id="headerLevel">회화 입문</span>
+        <span class="status-pill" id="headerStreak">연속 0일</span>
+      </div>
+    </header>
+
+    <div class="desktop-layout">
+      <nav class="side-nav" aria-label="주 메뉴" id="sideNav"></nav>
+      <main id="main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" aria-label="주 메뉴" id="bottomNav"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    'use strict';
+
+    const LESSONS = [
+      {
+        day: 1,
+        title: '첫인사와 자기소개',
+        short: '처음 만난 동료에게 나를 소개하기',
+        scene: '첫 출근 날, 일본인 동료에게 정중하게 인사합니다.',
+        steps: [
+          { prompt: '“처음 뵙겠습니다.”라고 인사해 보세요.', target: '初めまして。', kana: 'はじめまして。', korean: '하지메마시테.', meaning: '처음 뵙겠습니다.', accepted: ['はじめまして。'] },
+          { prompt: '“배사라고 합니다.”라고 정중하게 소개해 보세요.', target: 'バエサと申します。', kana: 'バエサともうします。', korean: '바에사 토 모-시마스.', meaning: '배사라고 합니다.', accepted: ['バエサともうします。'] },
+          { prompt: '“한국 회사에서 인사 업무를 하고 있습니다.”라고 말해 보세요.', target: '韓国の会社で人事の仕事をしています。', kana: 'かんこくのかいしゃでじんじのしごとをしています。', korean: '칸코쿠노 카이샤데 진지노 시고토오 시테이마스.', meaning: '한국 회사에서 인사 업무를 하고 있습니다.', accepted: ['かんこくのかいしゃでじんじのしごとをしています。', '韓国の会社でじんじのしごとをしています。'] },
+          { prompt: '“주로 급여 계산을 담당하고 있습니다.”라고 말해 보세요.', target: '主に給与計算を担当しています。', kana: 'おもにきゅうよけいさんをたんとうしています。', korean: '오모니 큐-요케-산오 탄토-시테이마스.', meaning: '주로 급여 계산을 담당하고 있습니다.', accepted: ['おもにきゅうよけいさんをたんとうしています。'] },
+          { prompt: '마지막으로 “잘 부탁드립니다.”라고 인사해 보세요.', target: 'よろしくお願いします。', kana: 'よろしくおねがいします。', korean: '요로시쿠 오네가이시마스.', meaning: '잘 부탁드립니다.', accepted: ['よろしくおねがいします。'] }
+        ]
+      },
+      {
+        day: 2,
+        title: '업무와 담당 설명',
+        short: '내 부서와 담당 업무를 자연스럽게 말하기',
+        scene: '동료가 담당 업무를 묻습니다. 짧고 명확하게 답합니다.',
+        steps: [
+          { prompt: '“저는 인사부에서 일하고 있습니다.”라고 말해 보세요.', target: '私は人事部で働いています。', kana: 'わたしはじんじぶではたらいています。', korean: '와타시와 진지부데 하타라이테이마스.', meaning: '저는 인사부에서 일하고 있습니다.', accepted: ['わたしはじんじぶではたらいています。'] },
+          { prompt: '“급여 계산과 근태 관리를 담당하고 있습니다.”라고 말해 보세요.', target: '給与計算と勤怠管理を担当しています。', kana: 'きゅうよけいさんときんたいかんりをたんとうしています。', korean: '큐-요케-산토 킨타이칸리오 탄토-시테이마스.', meaning: '급여 계산과 근태 관리를 담당하고 있습니다.', accepted: ['きゅうよけいさんときんたいかんりをたんとうしています。'] },
+          { prompt: '“아직 일본어를 공부하고 있습니다.”라고 말해 보세요.', target: 'まだ日本語を勉強しています。', kana: 'まだにほんごをべんきょうしています。', korean: '마다 니혼고오 벤쿄-시테이마스.', meaning: '아직 일본어를 공부하고 있습니다.', accepted: ['まだにほんごをべんきょうしています。'] },
+          { prompt: '“모르는 것이 있으면 가르쳐 주세요.”라고 부탁해 보세요.', target: '分からないことがあれば、教えてください。', kana: 'わからないことがあれば、おしえてください。', korean: '와카라나이 코토가 아레바, 오시에테 쿠다사이.', meaning: '모르는 것이 있으면 가르쳐 주세요.', accepted: ['わからないことがあればおしえてください。'] }
+        ]
+      },
+      {
+        day: 3,
+        title: '질문하고 되묻기',
+        short: '상대의 업무를 묻고 대화를 이어가기',
+        scene: '점심시간, 새 동료와 서로의 업무에 대해 이야기합니다.',
+        steps: [
+          { prompt: '“어떤 일을 하고 계세요?”라고 물어보세요.', target: 'どんな仕事をしていますか。', kana: 'どんなしごとをしていますか。', korean: '돈나 시고토오 시테이마스카.', meaning: '어떤 일을 하고 계세요?', accepted: ['どんなしごとをしていますか。'] },
+          { prompt: '“얼마나 오래 일하셨어요?”라고 물어보세요.', target: 'どのくらい働いていますか。', kana: 'どのくらいはたらいていますか。', korean: '도노쿠라이 하타라이테이마스카.', meaning: '얼마나 오래 일하셨어요?', accepted: ['どのくらいはたらいていますか。'] },
+          { prompt: '“3년 정도 일했습니다.”라고 답해 보세요.', target: '三年ぐらい働いています。', kana: 'さんねんぐらいはたらいています。', korean: '산넨구라이 하타라이테이마스.', meaning: '3년 정도 일했습니다.', accepted: ['さんねんぐらいはたらいています。', '3年ぐらい働いています。'] },
+          { prompt: '“그렇군요.”라고 자연스럽게 반응해 보세요.', target: 'そうなんですね。', kana: 'そうなんですね。', korean: '소-난데스네.', meaning: '그렇군요.', accepted: [] }
+        ]
+      },
+      {
+        day: 4,
+        title: '정중하게 도움 요청',
+        short: '못 알아들었을 때 부담 없이 다시 묻기',
+        scene: '회의 중 설명을 놓쳤습니다. 정중한 표현으로 도움을 요청합니다.',
+        steps: [
+          { prompt: '“죄송하지만, 한 번 더 부탁드립니다.”라고 말해 보세요.', target: 'すみませんが、もう一度お願いします。', kana: 'すみませんが、もういちどおねがいします。', korean: '스미마센가, 모-이치도 오네가이시마스.', meaning: '죄송하지만, 한 번 더 부탁드립니다.', accepted: ['すみませんがもういちどおねがいします。'] },
+          { prompt: '“조금 천천히 말씀해 주세요.”라고 부탁해 보세요.', target: 'もう少しゆっくり話してください。', kana: 'もうすこしゆっくりはなしてください。', korean: '모-스코시 윳쿠리 하나시테 쿠다사이.', meaning: '조금 천천히 말씀해 주세요.', accepted: ['もうすこしゆっくりはなしてください。'] },
+          { prompt: '“이 말은 무슨 뜻인가요?”라고 물어보세요.', target: 'この言葉はどういう意味ですか。', kana: 'このことばはどういういみですか。', korean: '코노 코토바와 도-이우 이미데스카.', meaning: '이 말은 무슨 뜻인가요?', accepted: ['このことばはどういういみですか。'] },
+          { prompt: '“이해했습니다. 감사합니다.”라고 답해 보세요.', target: '分かりました。ありがとうございます。', kana: 'わかりました。ありがとうございます。', korean: '와카리마시타. 아리가토-고자이마스.', meaning: '이해했습니다. 감사합니다.', accepted: ['わかりましたありがとうございます。'] }
+        ]
+      },
+      {
+        day: 5,
+        title: '일정과 회의',
+        short: '오늘 일정과 가능한 시간을 말하기',
+        scene: '동료와 오후 회의 시간을 조율합니다.',
+        steps: [
+          { prompt: '“오늘 오후에 회의가 있습니다.”라고 말해 보세요.', target: '今日の午後、会議があります。', kana: 'きょうのごご、かいぎがあります。', korean: '쿄-노 고고, 카이기가 아리마스.', meaning: '오늘 오후에 회의가 있습니다.', accepted: ['きょうのごごかいぎがあります。'] },
+          { prompt: '“세 시부터 괜찮습니다.”라고 말해 보세요.', target: '三時から大丈夫です。', kana: 'さんじからだいじょうぶです。', korean: '산지카라 다이죠-부데스.', meaning: '세 시부터 괜찮습니다.', accepted: ['さんじからだいじょうぶです。', '3時から大丈夫です。'] },
+          { prompt: '“회의실에서 만나요.”라고 말해 보세요.', target: '会議室で会いましょう。', kana: 'かいぎしつであいましょう。', korean: '카이기시츠데 아이마쇼-.', meaning: '회의실에서 만나요.', accepted: ['かいぎしつであいましょう。'] },
+          { prompt: '“그때 뵙겠습니다.”라고 답해 보세요.', target: 'では、また後で。', kana: 'では、またあとで。', korean: '데와, 마타 아토데.', meaning: '그럼, 이따 뵙겠습니다.', accepted: ['ではまたあとで。'] }
+        ]
+      },
+      {
+        day: 6,
+        title: '직장 기본 회화',
+        short: '출근부터 퇴근까지 자주 쓰는 표현',
+        scene: '하루 동안 동료와 주고받는 짧은 인사를 연습합니다.',
+        steps: [
+          { prompt: '출근한 동료에게 “안녕하세요. 수고 많으십니다.”라고 인사해 보세요.', target: 'おはようございます。お疲れ様です。', kana: 'おはようございます。おつかれさまです。', korean: '오하요-고자이마스. 오츠카레사마데스.', meaning: '안녕하세요. 수고 많으십니다.', accepted: ['おはようございますおつかれさまです。'] },
+          { prompt: '“자료를 확인하겠습니다.”라고 말해 보세요.', target: '資料を確認します。', kana: 'しりょうをかくにんします。', korean: '시료-오 카쿠닌시마스.', meaning: '자료를 확인하겠습니다.', accepted: ['しりょうをかくにんします。'] },
+          { prompt: '“곧 보내겠습니다.”라고 말해 보세요.', target: 'すぐに送ります。', kana: 'すぐにおくります。', korean: '스구니 오쿠리마스.', meaning: '곧 보내겠습니다.', accepted: ['すぐにおくります。'] },
+          { prompt: '퇴근하며 “먼저 실례하겠습니다.”라고 말해 보세요.', target: 'お先に失礼します。', kana: 'おさきにしつれいします。', korean: '오사키니 시츠레이시마스.', meaning: '먼저 실례하겠습니다.', accepted: ['おさきにしつれいします。'] }
+        ]
+      },
+      {
+        day: 7,
+        title: '1주차 회화 복습',
+        short: '배운 표현을 연결해 실제 대화처럼 말하기',
+        scene: '새 일본인 동료를 처음 만나 업무 이야기를 나눕니다.',
+        steps: [
+          { prompt: '처음 만난 동료에게 이름까지 정중하게 소개해 보세요.', target: '初めまして。バエサと申します。', kana: 'はじめまして。バエサともうします。', korean: '하지메마시테. 바에사 토 모-시마스.', meaning: '처음 뵙겠습니다. 배사라고 합니다.', accepted: ['はじめましてバエサともうします。'] },
+          { prompt: '인사부에서 일하며 담당 업무가 급여 계산이라고 말해 보세요.', target: '人事部で働いています。主に給与計算を担当しています。', kana: 'じんじぶではたらいています。おもにきゅうよけいさんをたんとうしています。', korean: '진지부데 하타라이테이마스. 오모니 큐-요케-산오 탄토-시테이마스.', meaning: '인사부에서 일합니다. 주로 급여 계산을 담당합니다.', accepted: ['じんじぶではたらいていますおもにきゅうよけいさんをたんとうしています。'] },
+          { prompt: '못 알아들었으니 한 번 더 천천히 말해 달라고 부탁해 보세요.', target: 'もう一度、ゆっくり話してください。', kana: 'もういちど、ゆっくりはなしてください。', korean: '모-이치도, 윳쿠리 하나시테 쿠다사이.', meaning: '한 번 더 천천히 말씀해 주세요.', accepted: ['もういちどゆっくりはなしてください。'] },
+          { prompt: '마지막으로 감사와 잘 부탁한다는 인사를 이어서 말해 보세요.', target: 'ありがとうございます。よろしくお願いします。', kana: 'ありがとうございます。よろしくおねがいします。', korean: '아리가토-고자이마스. 요로시쿠 오네가이시마스.', meaning: '감사합니다. 잘 부탁드립니다.', accepted: ['ありがとうございますよろしくおねがいします。'] }
+        ]
+      }
+    ];
+
+    const STORAGE_KEY = 'kotoba_note_v1';
+    const DEFAULT_STATE = {
+      version: 1,
+      progress: {},
+      mistakes: {},
+      activity: [],
+      settings: { showKana: true, showKorean: true, autoSpeak: false, speechRate: .82 }
+    };
+
+    let state = loadState();
+    let feedback = null;
+    let reviewContext = null;
+    let recognition = null;
+
+    const $main = document.getElementById('main');
+    const $toast = document.getElementById('toast');
+    const $sideNav = document.getElementById('sideNav');
+    const $bottomNav = document.getElementById('bottomNav');
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved || typeof saved !== 'object') return structuredClone(DEFAULT_STATE);
+        return {
+          ...structuredClone(DEFAULT_STATE),
+          ...saved,
+          progress: saved.progress || {},
+          mistakes: saved.mistakes || {},
+          activity: Array.isArray(saved.activity) ? saved.activity : [],
+          settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) }
+        };
+      } catch (_) { return structuredClone(DEFAULT_STATE); }
+    }
+
+    function saveState() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+      catch (_) { toast('진도를 저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.'); }
+      updateHeader();
+    }
+
+    function esc(value = '') {
+      return String(value).replace(/[&<>'"]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[ch]));
+    }
+
+    function toast(message) {
+      $toast.textContent = message;
+      $toast.classList.add('show');
+      clearTimeout($toast._timer);
+      $toast._timer = setTimeout(() => $toast.classList.remove('show'), 2400);
+    }
+
+    function dateKey(date = new Date()) {
+      const offset = date.getTimezoneOffset() * 60000;
+      return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+    }
+
+    function recordActivity() {
+      const today = dateKey();
+      if (!state.activity.includes(today)) state.activity.push(today);
+      state.activity = state.activity.slice(-180);
+    }
+
+    function streak() {
+      const set = new Set(state.activity);
+      let day = new Date();
+      if (!set.has(dateKey(day))) day.setDate(day.getDate() - 1);
+      let count = 0;
+      while (set.has(dateKey(day))) {
+        count++;
+        day.setDate(day.getDate() - 1);
+      }
+      return count;
+    }
+
+    function completedCount() {
+      return LESSONS.filter(lesson => state.progress[lesson.day]?.completed).length;
+    }
+
+    function currentDay() {
+      const next = LESSONS.find(lesson => !state.progress[lesson.day]?.completed);
+      return next ? next.day : LESSONS.length;
+    }
+
+    function isUnlocked(day) {
+      return day === 1 || Boolean(state.progress[day - 1]?.completed) || Boolean(state.progress[day]?.completed);
+    }
+
+    function activeMistakes() {
+      return Object.values(state.mistakes).filter(item => !item.resolved).sort((a,b) => b.lastAt - a.lastAt);
+    }
+
+    function navItems() {
+      return [
+        ['home', '今日', '오늘'],
+        ['plan', '道', '진도'],
+        ['review', '直', '오답'],
+        ['settings', '設', '설정']
+      ];
+    }
+
+    function currentSection() {
+      const route = getRoute();
+      if (route.view === 'lesson') return 'home';
+      return route.view;
+    }
+
+    function renderNav() {
+      const active = currentSection();
+      const markup = navItems().map(([key, glyph, label]) => `
+        <button class="nav-btn ${active === key ? 'active' : ''}" data-route="${key}" aria-current="${active === key ? 'page' : 'false'}">
+          <span class="nav-glyph" aria-hidden="true">${glyph}</span><span>${label}</span>
+        </button>`).join('');
+      $sideNav.innerHTML = markup;
+      $bottomNav.innerHTML = markup;
+      document.querySelectorAll('[data-route]').forEach(button => {
+        button.addEventListener('click', () => navigate(button.dataset.route));
+      });
+    }
+
+    function updateHeader() {
+      const done = completedCount();
+      document.getElementById('headerLevel').textContent = done >= 7 ? '1주차 완주' : `회화 입문 · ${done}/7`;
+      document.getElementById('headerStreak').textContent = `연속 ${streak()}일`;
+    }
+
+    function getRoute() {
+      const raw = location.hash.replace(/^#\/?/, '') || 'home';
+      const [view, p1, p2] = raw.split('/');
+      if (view === 'lesson') return { view, day: Number(p1) || 1, step: Number(p2) || 0 };
+      return { view: ['home','plan','review','settings'].includes(view) ? view : 'home' };
+    }
+
+    function navigate(path, replace = false) {
+      const hash = '#/' + path.replace(/^\//, '');
+      if (replace) history.replaceState(null, '', hash);
+      else if (location.hash === hash) render();
+      else location.hash = hash;
+    }
+
+    function render() {
+      feedback = null;
+      renderNav();
+      updateHeader();
+      const route = getRoute();
+      if (route.view === 'lesson') renderLesson(route.day, route.step);
+      else if (route.view === 'plan') renderPlan();
+      else if (route.view === 'review') renderReview();
+      else if (route.view === 'settings') renderSettings();
+      else renderHome();
+      requestAnimationFrame(() => $main.focus({ preventScroll: true }));
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function linePreview(step, index) {
+      return `<div class="preview-line">
+        <span class="num">0${index + 1}</span>
+        <div><div class="jp">${esc(step.target)}</div><div class="kr">${esc(step.meaning)}</div></div>
+      </div>`;
+    }
+
+    function renderHome() {
+      const day = currentDay();
+      const lesson = LESSONS[day - 1];
+      const progress = state.progress[day] || { step: 0 };
+      const done = completedCount();
+      const mistakes = activeMistakes();
+      const finished = done === LESSONS.length;
+      $main.innerHTML = `<div class="view">
+        <section class="hero-panel" aria-labelledby="home-title">
+          <div class="hero-copy">
+            <p class="eyebrow">${finished ? '7-day course complete' : `Day ${day} · 오늘의 회화`}</p>
+            <h1 class="page-title" id="home-title">${finished ? '한 주의 문장이<br>내 말이 되었습니다.' : esc(lesson.title)}</h1>
+            <p class="lead">${finished ? '오답 노트로 약한 문장을 다시 다지거나, 1일차부터 자유롭게 복습해 보세요.' : esc(lesson.scene)}</p>
+            <div class="progress-block">
+              <div class="progress-label"><span>7일 회화 코스</span><span>${done} / 7일</span></div>
+              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="${done}"><div class="progress-fill" style="width:${done / 7 * 100}%"></div></div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn red" id="startToday">${finished ? '1일차 다시 연습' : progress.step ? `Day ${day} 이어서` : `Day ${day} 시작하기`} <span aria-hidden="true">→</span></button>
+              ${mistakes.length ? '<button class="btn ghost" id="quickReview">오늘의 오답 복습</button>' : ''}
+            </div>
+          </div>
+        </section>
+
+        <div class="home-grid">
+          <section class="paper-card today-card" aria-labelledby="today-lines-title">
+            <div class="section-head"><div><h2 id="today-lines-title">${finished ? '다시 꺼내 말할 문장' : '오늘 입에 붙일 문장'}</h2><p>한자 → 읽기 → 한글 발음 순서로 익힙니다.</p></div><span class="seal" aria-hidden="true">声</span></div>
+            <div class="today-lines">${lesson.steps.slice(0, 3).map(linePreview).join('')}</div>
+            <button class="btn soft full" id="previewListen">대표 문장 이어 듣기</button>
+          </section>
+
+          <section class="paper-card" aria-labelledby="record-title">
+            <div class="section-head"><div><h2 id="record-title">나의 기록</h2><p>브라우저에 자동 저장됩니다.</p></div></div>
+            <div class="metric-row">
+              <div class="metric"><strong>${done}</strong><span>완료한 날</span></div>
+              <div class="metric"><strong>${streak()}</strong><span>연속 학습</span></div>
+              <div class="metric"><strong>${Object.keys(state.mistakes).length}</strong><span>교정 문장</span></div>
+            </div>
+          </section>
+
+          <section class="paper-card mistake-teaser" aria-labelledby="mistake-title">
+            <div class="section-head"><div><h2 id="mistake-title">오답 노트</h2><p>${mistakes.length ? `${mistakes.length}개 문장이 다시 말하기를 기다려요.` : '지금은 복습할 오답이 없습니다.'}</p></div></div>
+            ${mistakes.length
+              ? `<div class="jp" style="font-family:'Yu Mincho',serif;font-weight:700">${esc(mistakes[0].target)}</div><div class="muted tiny" style="margin-top:5px">최근 입력: ${esc(mistakes[0].lastAnswer || '—')}</div><button class="btn ghost small full" style="margin-top:14px" id="openReview">오답 확인하기</button>`
+              : '<div class="empty-ink">틀려도 괜찮아요.<br>틀린 문장이 가장 좋은 복습 카드가 됩니다.</div>'}
+          </section>
+        </div>
+      </div>`;
+
+      document.getElementById('startToday').addEventListener('click', () => {
+        const startDay = finished ? 1 : day;
+        const startStep = finished ? 0 : Math.min(state.progress[startDay]?.step || 0, LESSONS[startDay - 1].steps.length - 1);
+        reviewContext = null;
+        navigate(`lesson/${startDay}/${startStep}`);
+      });
+      document.getElementById('previewListen').addEventListener('click', () => speak(lesson.steps.slice(0, 3).map(s => s.target).join(' ')));
+      document.getElementById('quickReview')?.addEventListener('click', startReview);
+      document.getElementById('openReview')?.addEventListener('click', () => navigate('review'));
+    }
+
+    function renderPlan() {
+      const now = currentDay();
+      $main.innerHTML = `<div class="view plan-wrap">
+        <p class="eyebrow">7-day conversation path</p>
+        <h1 class="page-title">매일 한 장면씩,<br>말할 수 있는 일본어.</h1>
+        <p class="lead">1일차 자기소개에서 시작해 일주일 뒤에는 업무 대화를 연결해서 말합니다. 완료한 날은 언제든 다시 연습할 수 있습니다.</p>
+        <div class="timeline" aria-label="7일 학습 진도">
+          ${LESSONS.map(lesson => {
+            const done = Boolean(state.progress[lesson.day]?.completed);
+            const unlocked = isUnlocked(lesson.day);
+            const current = lesson.day === now && !done;
+            return `<article class="day-row ${done ? 'done' : ''} ${current ? 'current' : ''} ${!unlocked ? 'locked' : ''}">
+              <div class="day-dot" aria-hidden="true">${done ? '✓' : lesson.day}</div>
+              <div class="day-copy"><strong>Day ${lesson.day} · ${esc(lesson.title)}</strong><span>${esc(lesson.short)}</span></div>
+              <button class="btn ${current ? 'red' : 'ghost'} small day-action" data-day="${lesson.day}" ${!unlocked ? 'disabled' : ''}>${done ? '복습' : current ? '시작' : '잠김'}</button>
+            </article>`;
+          }).join('')}
+        </div>
+      </div>`;
+      document.querySelectorAll('[data-day]').forEach(button => button.addEventListener('click', () => {
+        const day = Number(button.dataset.day);
+        const step = state.progress[day]?.completed ? 0 : Math.min(state.progress[day]?.step || 0, LESSONS[day - 1].steps.length - 1);
+        reviewContext = null;
+        navigate(`lesson/${day}/${step}`);
+      }));
+    }
+
+    function readingLines(step) {
+      return `<div class="line-stack">
+        <div class="kanji-line" lang="ja">${esc(step.target)}</div>
+        ${state.settings.showKana ? `<div class="kana-line" lang="ja">${esc(step.kana)}</div>` : ''}
+        ${state.settings.showKorean ? `<div class="korean-line">${esc(step.korean)}</div>` : ''}
+        <div class="meaning-line">${esc(step.meaning)}</div>
+      </div>`;
+    }
+
+    function renderLesson(dayNumber, stepIndex) {
+      const lesson = LESSONS[dayNumber - 1];
+      if (!lesson || (!isUnlocked(dayNumber) && !reviewContext)) { navigate('plan', true); return; }
+      const isReview = Boolean(reviewContext);
+      const actualStepIndex = isReview ? reviewContext.step : Math.max(0, Math.min(stepIndex, lesson.steps.length - 1));
+      const step = lesson.steps[actualStepIndex];
+      const passed = state.progress[dayNumber]?.step || 0;
+      const showModel = isReview || actualStepIndex < passed;
+
+      $main.innerHTML = `<div class="view lesson-wrap">
+        <div class="lesson-top">
+          <button class="back-link" id="lessonBack">← ${isReview ? '오답 노트' : '오늘 화면'}</button>
+          <div class="step-dots" aria-hidden="true">${lesson.steps.map((_,i) => `<i class="${i < actualStepIndex ? 'done' : i === actualStepIndex ? 'current' : ''}"></i>`).join('')}</div>
+          <span class="step-counter">${isReview ? '오답 복습' : `${actualStepIndex + 1} / ${lesson.steps.length}`}</span>
+        </div>
+        <div class="scene-strip"><strong>${isReview ? '다시 말하기' : `Day ${lesson.day}`}</strong><span>${esc(lesson.scene)}</span></div>
+
+        <section class="dialogue-stage" aria-labelledby="lesson-prompt">
+          <div class="speaker"><span class="avatar" aria-hidden="true">先</span><span>선생님</span></div>
+          <p class="prompt-ko" id="lesson-prompt">${esc(step.prompt)}</p>
+          <div class="model-answer" id="modelAnswer" ${showModel ? '' : 'hidden'}>
+            ${readingLines(step)}
+            <div class="listen-row"><button class="listen-btn" id="speakNormal">▶ 보통 속도</button><button class="listen-btn" id="speakSlow">▶ 천천히</button></div>
+          </div>
+        </section>
+
+        <section class="answer-panel" aria-labelledby="answer-label">
+          <label id="answer-label" for="answerInput">일본어로 직접 입력해 보세요</label>
+          <div class="input-wrap">
+            <input class="answer-input" id="answerInput" lang="ja" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="ここに入力してください" aria-describedby="answerHelp">
+            <button class="btn icon-only soft" id="micButton" type="button" aria-label="일본어 음성으로 입력">음성</button>
+          </div>
+          <p class="answer-help" id="answerHelp">한자나 히라가나 어느 쪽으로 입력해도 됩니다. 마침표와 띄어쓰기는 채점하지 않습니다.</p>
+          <div class="answer-actions"><button class="btn ghost" id="showHint">힌트 보기</button><button class="btn red" id="checkAnswer">확인하기</button></div>
+          <div id="feedbackSlot" aria-live="polite"></div>
+        </section>
+      </div>`;
+
+      const input = document.getElementById('answerInput');
+      const micButton = document.getElementById('micButton');
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) { micButton.disabled = true; micButton.title = '이 브라우저는 음성 입력을 지원하지 않습니다.'; }
+      document.getElementById('lessonBack').addEventListener('click', () => { reviewContext = null; navigate(isReview ? 'review' : 'home'); });
+      document.getElementById('speakNormal')?.addEventListener('click', () => speak(step.target, state.settings.speechRate));
+      document.getElementById('speakSlow')?.addEventListener('click', () => speak(step.target, .58));
+      document.getElementById('showHint').addEventListener('click', () => {
+        document.getElementById('modelAnswer').hidden = false;
+        document.getElementById('showHint').textContent = '힌트가 열렸어요';
+        document.getElementById('showHint').disabled = true;
+        speak(step.target, .58);
+      });
+      document.getElementById('checkAnswer').addEventListener('click', () => checkAnswer(dayNumber, actualStepIndex));
+      input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.isComposing) checkAnswer(dayNumber, actualStepIndex); });
+      micButton.addEventListener('click', () => startRecognition(input, micButton));
+      input.focus();
+      if (state.settings.autoSpeak) setTimeout(() => speak(step.target), 280);
+    }
+
+    function normalize(value) {
+      return String(value || '')
+        .normalize('NFKC')
+        .replace(/[\s　、。,.!?！？・「」『』（）()\-]/g, '')
+        .toLowerCase();
+    }
+
+    function hira(value) {
+      return String(value).replace(/[ァ-ヶ]/g, char => String.fromCharCode(char.charCodeAt(0) - 0x60));
+    }
+
+    function kanjiReadings(step) {
+      const target = normalize(step.target);
+      const reading = hira(normalize(step.kana));
+      const parts = target.match(/[一-龯々]+|[^一-龯々]+/g) || [];
+      const mappings = [];
+      let readingIndex = 0;
+
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        if (/[一-龯々]/.test(part)) {
+          const nextLiteral = parts[i + 1] && !/[一-龯々]/.test(parts[i + 1]) ? hira(parts[i + 1]) : '';
+          const end = nextLiteral ? reading.indexOf(nextLiteral, readingIndex) : reading.length;
+          if (end >= readingIndex) {
+            mappings.push([part, reading.slice(readingIndex, end)]);
+            readingIndex = end;
+          }
+        } else {
+          const literal = hira(part);
+          const found = reading.indexOf(literal, readingIndex);
+          if (found >= 0) readingIndex = found + literal.length;
+        }
+      }
+      return mappings.sort((a, b) => b[0].length - a[0].length);
+    }
+
+    function readingKey(value, step) {
+      let result = hira(normalize(value));
+      for (const [kanji, reading] of kanjiReadings(step)) result = result.split(kanji).join(reading);
+      return result;
+    }
+
+    function levenshtein(a, b) {
+      const x = [...a], y = [...b];
+      const dp = Array.from({ length: x.length + 1 }, (_, i) => [i]);
+      for (let j = 1; j <= y.length; j++) dp[0][j] = j;
+      for (let i = 1; i <= x.length; i++) for (let j = 1; j <= y.length; j++) {
+        dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (x[i-1] === y[j-1] ? 0 : 1));
+      }
+      return dp[x.length][y.length];
+    }
+
+    function evaluate(value, step) {
+      const answer = normalize(value);
+      const candidates = [step.target, step.kana, ...(step.accepted || [])].map(item => normalize(item));
+      if (!answer) return { status: 'empty', distance: Infinity };
+      const answerReading = readingKey(answer, step);
+      if (candidates.some(candidate => answer === candidate || hira(answer) === hira(candidate) || answerReading === readingKey(candidate, step))) return { status: 'correct', distance: 0 };
+      const distance = Math.min(...candidates.map(candidate => levenshtein(answerReading, readingKey(candidate, step))));
+      const scale = Math.max(4, normalize(step.kana).length);
+      return { status: distance <= Math.max(1, Math.floor(scale * .16)) ? 'near' : 'wrong', distance };
+    }
+
+    function correctionTips(value, step) {
+      const n = normalize(value);
+      const tips = [];
+      if (/もういます/.test(n) && /申します|もうします/.test(step.target + step.kana)) tips.push('「もういます」가 아니라 「もうします」입니다. し 소리를 넣어 주세요.');
+      if ((/じんじしごと/.test(n) || /人事仕事/.test(n)) && /人事の仕事/.test(step.target)) tips.push('「人事」와 「仕事」 사이에는 연결 조사 「の」가 필요합니다.');
+      if (/よろしくおねがします/.test(n) && /おねがいします/.test(normalize(step.kana))) tips.push('「おねがい」의 「い」가 빠지지 않도록 주의해 주세요.');
+      if (!tips.length) tips.push('빨간 부분을 목표 문장과 비교한 뒤, 소리 내어 한 번 더 입력해 보세요.');
+      return tips;
+    }
+
+    function compactDiff(value, target) {
+      const a = String(value).trim(), b = String(target).trim();
+      let start = 0;
+      while (start < a.length && start < b.length && a[start] === b[start]) start++;
+      let endA = a.length - 1, endB = b.length - 1;
+      while (endA >= start && endB >= start && a[endA] === b[endB]) { endA--; endB--; }
+      const prefix = esc(a.slice(0, start));
+      const wrong = esc(a.slice(start, endA + 1));
+      const right = esc(b.slice(start, endB + 1));
+      const suffix = esc(b.slice(endB + 1));
+      return `${prefix}${wrong ? `<span class="diff-remove">${wrong}</span>` : ''}${right ? `<span class="diff-add">${right}</span>` : ''}${suffix}`;
+    }
+
+    function mistakeKey(day, step) { return `${day}-${step}`; }
+
+    function saveMistake(day, stepIndex, value, step) {
+      const key = mistakeKey(day, stepIndex);
+      const previous = state.mistakes[key] || {};
+      state.mistakes[key] = {
+        key, day, step: stepIndex, target: step.target, kana: step.kana, korean: step.korean,
+        meaning: step.meaning, prompt: step.prompt, lastAnswer: value.trim(),
+        count: (previous.count || 0) + 1, lastAt: Date.now(), resolved: false
+      };
+      saveState();
+    }
+
+    function resolveMistake(day, stepIndex) {
+      const item = state.mistakes[mistakeKey(day, stepIndex)];
+      if (item) { item.resolved = true; item.resolvedAt = Date.now(); }
+    }
+
+    function checkAnswer(day, stepIndex) {
+      const input = document.getElementById('answerInput');
+      if (!input) return;
+      const value = input.value;
+      const step = LESSONS[day - 1].steps[stepIndex];
+      const result = evaluate(value, step);
+      const slot = document.getElementById('feedbackSlot');
+      if (result.status === 'empty') { toast('먼저 일본어 문장을 입력해 주세요.'); input.focus(); return; }
+
+      if (result.status === 'correct') {
+        resolveMistake(day, stepIndex);
+        recordActivity();
+        if (!reviewContext) {
+          const progress = state.progress[day] || { step: 0, completed: false };
+          progress.step = Math.max(progress.step || 0, stepIndex + 1);
+          state.progress[day] = progress;
+        }
+        saveState();
+        document.getElementById('modelAnswer').hidden = false;
+        slot.innerHTML = `<div class="feedback correct"><h3>좋아요, 정확합니다.</h3><p>문장 구조와 표현이 자연스럽습니다. 이제 한 번 소리 내어 읽고 다음 문장으로 넘어가세요.</p><button class="btn success full" id="nextStep">${reviewContext ? '오답 노트로 돌아가기' : stepIndex + 1 >= LESSONS[day - 1].steps.length ? '오늘 학습 마치기' : '다음 문장'}</button></div>`;
+        input.disabled = true;
+        document.getElementById('checkAnswer').disabled = true;
+        document.getElementById('showHint').disabled = true;
+        speak(step.target);
+        document.getElementById('nextStep').focus();
+        document.getElementById('nextStep').addEventListener('click', () => {
+          if (reviewContext) { reviewContext = null; navigate('review'); return; }
+          if (stepIndex + 1 >= LESSONS[day - 1].steps.length) completeDay(day);
+          else navigate(`lesson/${day}/${stepIndex + 1}`);
+        });
+        return;
+      }
+
+      saveMistake(day, stepIndex, value, step);
+      document.getElementById('modelAnswer').hidden = false;
+      const tips = correctionTips(value, step);
+      const compareTarget = /[一-龯々]/.test(value) ? step.target : step.kana;
+      slot.innerHTML = `<div class="feedback ${result.status}">
+        <h3>${result.status === 'near' ? '거의 맞았어요. 한 부분만 다듬어 볼게요.' : '괜찮아요. 지금 바로 고치면 오래 기억됩니다.'}</h3>
+        <div class="correction-box"><div><span>입력한 문장</span><b lang="ja">${esc(value)}</b></div><div><span>자연스러운 문장</span><b lang="ja">${compactDiff(value, compareTarget)}</b></div></div>
+        <ul class="tip-list">${tips.map(tip => `<li>${esc(tip)}</li>`).join('')}</ul>
+        <button class="btn ghost full" id="retryAnswer" style="margin-top:12px">고쳐서 다시 입력하기</button>
+      </div>`;
+      speak(step.target, .62);
+      document.getElementById('retryAnswer').addEventListener('click', () => { input.focus(); input.select(); slot.innerHTML = ''; });
+    }
+
+    function completeDay(day) {
+      const lesson = LESSONS[day - 1];
+      state.progress[day] = { step: lesson.steps.length, completed: true, completedAt: Date.now() };
+      recordActivity();
+      saveState();
+      $main.innerHTML = `<div class="view lesson-wrap"><section class="paper-card complete-panel">
+        <div class="complete-mark" aria-hidden="true">完了</div>
+        <p class="eyebrow">Day ${day} complete</p>
+        <h1>${esc(lesson.title)} 완료</h1>
+        <p>${day < LESSONS.length ? '오늘 배운 문장은 오답 노트와 다음 학습의 복습 문장으로 이어집니다.' : '7일 동안 쌓은 문장을 이제 실제 대화에서 꺼내 써 보세요.'}</p>
+        <div class="hero-actions" style="justify-content:center"><button class="btn red" id="completeHome">오늘 화면으로</button>${day < LESSONS.length ? `<button class="btn ghost" id="nextDay">Day ${day + 1} 미리 보기</button>` : '<button class="btn ghost" id="reviewAfter">오답 복습하기</button>'}</div>
+      </section></div>`;
+      document.getElementById('completeHome').addEventListener('click', () => navigate('home'));
+      document.getElementById('nextDay')?.addEventListener('click', () => navigate('plan'));
+      document.getElementById('reviewAfter')?.addEventListener('click', () => navigate('review'));
+    }
+
+    function speak(text, rate = state.settings.speechRate) {
+      if (!('speechSynthesis' in window)) { toast('이 브라우저에서는 음성 재생을 지원하지 않습니다.'); return; }
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ja-JP';
+      utterance.rate = Number(rate) || .82;
+      const voices = speechSynthesis.getVoices();
+      utterance.voice = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang.startsWith('ja')) || null;
+      speechSynthesis.speak(utterance);
+    }
+
+    function startRecognition(input, button) {
+      const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!Recognition) return;
+      try {
+        recognition?.abort();
+        recognition = new Recognition();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        button.textContent = '듣는 중…';
+        button.disabled = true;
+        recognition.onresult = event => { input.value = event.results[0][0].transcript; input.focus(); };
+        recognition.onerror = () => toast('음성을 듣지 못했습니다. 마이크 권한과 인터넷 연결을 확인해 주세요.');
+        recognition.onend = () => { button.textContent = '음성'; button.disabled = false; };
+        recognition.start();
+      } catch (_) { button.textContent = '음성'; button.disabled = false; }
+    }
+
+    function renderReview() {
+      const mistakes = Object.values(state.mistakes).sort((a,b) => Number(a.resolved) - Number(b.resolved) || b.lastAt - a.lastAt);
+      const active = mistakes.filter(item => !item.resolved);
+      $main.innerHTML = `<div class="view review-wrap">
+        <p class="eyebrow">Correction notebook</p>
+        <h1 class="page-title">틀린 문장이<br>내 문장이 되는 곳.</h1>
+        <p class="lead">입력한 문장과 자연스러운 문장을 나란히 보고, 다시 맞힌 문장은 자동으로 복습 완료 처리합니다.</p>
+        ${active.length ? `<div class="hero-actions"><button class="btn red" id="startReview">오답 ${active.length}개 중 첫 문장 복습</button></div>` : ''}
+        <div class="review-list">
+          ${mistakes.length ? mistakes.map(item => `<article class="mistake-card ${item.resolved ? 'resolved' : ''}">
+            <div class="mistake-meta"><span>Day ${item.day} · ${item.resolved ? '복습 완료' : `틀린 횟수 ${item.count}`}</span><span>${new Date(item.lastAt).toLocaleDateString('ko-KR')}</span></div>
+            <div class="target" lang="ja">${esc(item.target)}</div>
+            <div class="muted tiny">${esc(item.kana)}</div>
+            <div class="typed">내 입력: ${esc(item.lastAnswer || '—')}</div>
+            <div class="card-actions"><button class="btn ghost small" data-speak-review="${item.day}-${item.step}">발음 듣기</button><button class="btn ${item.resolved ? 'ghost' : 'red'} small" data-practice="${item.day}-${item.step}">${item.resolved ? '다시 연습' : '고쳐 말하기'}</button></div>
+          </article>`).join('') : `<section class="paper-card"><div class="empty-ink">아직 저장된 오답이 없습니다.<br>회화 수업에서 틀린 문장이 여기에 자동으로 모입니다.</div><button class="btn red full" id="goLesson">Day ${currentDay()} 학습 시작하기</button></section>`}
+        </div>
+      </div>`;
+      document.getElementById('startReview')?.addEventListener('click', startReview);
+      document.getElementById('goLesson')?.addEventListener('click', () => navigate(`lesson/${currentDay()}/0`));
+      document.querySelectorAll('[data-practice]').forEach(button => button.addEventListener('click', () => openMistake(button.dataset.practice)));
+      document.querySelectorAll('[data-speak-review]').forEach(button => button.addEventListener('click', () => {
+        const [day, step] = button.dataset.speakReview.split('-').map(Number);
+        speak(LESSONS[day - 1].steps[step].target);
+      }));
+    }
+
+    function startReview() {
+      const first = activeMistakes()[0];
+      if (!first) { toast('복습할 오답이 없습니다.'); return; }
+      openMistake(first.key);
+    }
+
+    function openMistake(key) {
+      const [day, step] = key.split('-').map(Number);
+      reviewContext = { day, step };
+      navigate(`lesson/${day}/${step}`);
+    }
+
+    function renderSettings() {
+      const s = state.settings;
+      $main.innerHTML = `<div class="view settings-wrap">
+        <p class="eyebrow">Study settings</p>
+        <h1 class="page-title">내가 보기 편하게,<br>이어가기 쉽게.</h1>
+        <div class="settings-list">
+          <section class="paper-card">
+            <div class="section-head"><div><h2>표시와 발음</h2><p>학습 카드에 보이는 보조 정보를 조절합니다.</p></div></div>
+            <div class="setting-row"><div class="setting-copy"><strong>히라가나·가타카나 읽기</strong><span>한자 원문 바로 아래에 표시</span></div><label class="switch"><input type="checkbox" id="showKana" ${s.showKana ? 'checked' : ''}><span aria-hidden="true"></span></label></div>
+            <div class="setting-row"><div class="setting-copy"><strong>한글 발음</strong><span>읽기 아래에 한국어식 발음 표시</span></div><label class="switch"><input type="checkbox" id="showKorean" ${s.showKorean ? 'checked' : ''}><span aria-hidden="true"></span></label></div>
+            <div class="setting-row"><div class="setting-copy"><strong>문장 자동 재생</strong><span>연습 화면을 열 때 일본어 발음 재생</span></div><label class="switch"><input type="checkbox" id="autoSpeak" ${s.autoSpeak ? 'checked' : ''}><span aria-hidden="true"></span></label></div>
+            <div class="setting-row"><div class="setting-copy"><strong>기본 재생 속도</strong><span id="rateLabel">${Math.round(s.speechRate * 100)}%</span></div><input class="range" id="speechRate" type="range" min="0.55" max="1" step="0.05" value="${s.speechRate}"></div>
+          </section>
+
+          <section class="paper-card">
+            <div class="section-head"><div><h2>휴대폰에서 사용하기</h2><p>이 앱은 설치가 필요 없는 단일 웹 파일입니다.</p></div></div>
+            <ol class="steps-list">
+              <li>가장 간단한 방법은 이 <b>outputs 폴더</b>를 정적 웹 호스팅에 올리는 것입니다.</li>
+              <li>같은 와이파이에서는 함께 제공된 <b>start-mobile-server.cmd</b>를 실행한 뒤 표시되는 주소를 휴대폰 브라우저에서 엽니다.</li>
+              <li>휴대폰 브라우저 메뉴에서 <b>홈 화면에 추가</b>를 선택하면 앱처럼 실행할 수 있습니다.</li>
+            </ol>
+            <div class="note-box">진도는 기기별 브라우저에 저장됩니다. PC와 휴대폰 사이에서 옮길 때는 아래의 백업과 복원을 사용하세요.</div>
+          </section>
+
+          <section class="paper-card">
+            <div class="section-head"><div><h2>진도 백업</h2><p>오답과 일차별 진도를 파일로 보관하거나 다른 기기로 옮깁니다.</p></div></div>
+            <div class="hero-actions"><button class="btn soft" id="exportData">백업 파일 받기</button><label class="btn ghost file-label">백업 복원<input type="file" id="importData" accept="application/json,.json" hidden></label></div>
+          </section>
+
+          <section class="paper-card">
+            <div class="section-head"><div><h2>학습 기록 초기화</h2><p>완료 진도와 오답 기록을 모두 지웁니다.</p></div></div>
+            <button class="btn ghost danger" id="resetData">모든 기록 지우기</button>
+          </section>
+        </div>
+      </div>`;
+
+      ['showKana','showKorean','autoSpeak'].forEach(key => document.getElementById(key).addEventListener('change', event => { state.settings[key] = event.target.checked; saveState(); }));
+      document.getElementById('speechRate').addEventListener('input', event => { state.settings.speechRate = Number(event.target.value); document.getElementById('rateLabel').textContent = Math.round(state.settings.speechRate * 100) + '%'; saveState(); });
+      document.getElementById('exportData').addEventListener('click', exportData);
+      document.getElementById('importData').addEventListener('change', importData);
+      document.getElementById('resetData').addEventListener('click', resetData);
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `kotoba-note-${dateKey()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => { URL.revokeObjectURL(link.href); link.remove(); }, 1000);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      file.text().then(text => {
+        const parsed = JSON.parse(text);
+        if (!parsed || parsed.version !== 1 || !parsed.progress || !parsed.settings) throw new Error('invalid');
+        state = { ...structuredClone(DEFAULT_STATE), ...parsed, settings: { ...DEFAULT_STATE.settings, ...parsed.settings } };
+        saveState();
+        toast('학습 기록을 복원했습니다.');
+        render();
+      }).catch(() => toast('올바른 ことばノート 백업 파일이 아닙니다.'));
+    }
+
+    function resetData() {
+      if (!confirm('완료 진도와 오답 기록을 모두 지울까요? 이 작업은 되돌릴 수 없습니다.')) return;
+      state = structuredClone(DEFAULT_STATE);
+      localStorage.removeItem(STORAGE_KEY);
+      saveState();
+      toast('학습 기록을 초기화했습니다.');
+      navigate('home');
+    }
+
+    window.addEventListener('hashchange', render);
+    if (!location.hash) history.replaceState(null, '', '#/home');
+    render();
+  </script>
+</body>
+</html>
